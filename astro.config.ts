@@ -19,7 +19,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  site: 'raisbecka.github.io',
+  site: 'https://raisbecka.github.io',
   base: '/MyPortfolio',
   // Static output - API routes are handled by Cloudflare Pages Functions in /functions folder
   integrations: [
