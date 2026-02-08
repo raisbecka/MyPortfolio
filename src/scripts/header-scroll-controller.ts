@@ -25,7 +25,9 @@ interface HeaderControllerConfig {
  * Initialize header scroll controller
  * @param config - Configuration object for the header controller
  */
-export function initHeaderScrollController(config: HeaderControllerConfig): void {
+export function initHeaderScrollController(
+  config: HeaderControllerConfig,
+): void {
   if (typeof window === 'undefined') return
 
   const { scrollThreshold, desktopBreakpoint, headerIds } = config
@@ -44,7 +46,10 @@ export function initHeaderScrollController(config: HeaderControllerConfig): void
    * Get header elements from DOM
    * @returns Elements object or null if not found
    */
-  const getElements = (): { wrapper: HTMLElement; inner: HTMLElement } | null => {
+  const getElements = (): {
+    wrapper: HTMLElement
+    inner: HTMLElement
+  } | null => {
     const wrapper = document.getElementById(headerIds.wrapper)
     const inner = document.getElementById(headerIds.inner)
 
@@ -165,4 +170,3 @@ export function initHeaderScrollController(config: HeaderControllerConfig): void
     init()
   }
 }
-

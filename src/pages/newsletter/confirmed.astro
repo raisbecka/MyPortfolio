@@ -1,35 +1,42 @@
 ---
-import Layout from '@/layouts/Layout.astro'
-import PageHead from '@/components/PageHead.astro'
-import { Icon } from 'astro-icon/components'
-import { buttonVariants } from '@/components/ui/button'
 import Link from '@/components/Link.astro'
+import PageHead from '@/components/PageHead.astro'
+import { buttonVariants } from '@/components/ui/button'
+import Layout from '@/layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
 ---
 
 <Layout class="max-w-2xl">
   <PageHead slot="head" title="Subscription Confirmed" />
-  
-  <div class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-    <div class="rounded-full bg-green-100 dark:bg-green-900/30 p-6 mb-6">
-      <Icon name="lucide:check-circle" class="w-16 h-16 text-green-600 dark:text-green-400" />
+
+  <div
+    class="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center"
+  >
+    <div class="mb-6 rounded-full bg-green-100 p-6 dark:bg-green-900/30">
+      <Icon
+        name="lucide:check-circle"
+        class="h-16 w-16 text-green-600 dark:text-green-400"
+      />
     </div>
-    
-    <h1 class="text-3xl md:text-4xl font-bold mb-4">
-      Subscription Confirmed!
-    </h1>
-    
-    <p class="text-muted-foreground text-lg mb-8 max-w-md">
-      Thank you for subscribing to our newsletter. You'll now receive the latest posts about infrastructure, HPC, Kubernetes, and DevOps delivered to your inbox.
+
+    <h1 class="mb-4 text-3xl font-bold md:text-4xl">Subscription Confirmed!</h1>
+
+    <p class="text-muted-foreground mb-8 max-w-md text-lg">
+      Thank you for subscribing to our newsletter. You'll now receive the latest
+      posts about infrastructure, HPC, Kubernetes, and DevOps delivered to your
+      inbox.
     </p>
-    
-    <div class="flex flex-col sm:flex-row gap-4">
+
+    <div class="flex flex-col gap-4 sm:flex-row">
       <Link href="/" class={buttonVariants({ variant: 'default', size: 'lg' })}>
         Go to Homepage
       </Link>
-      <Link href="/blog" class={buttonVariants({ variant: 'outline', size: 'lg' })}>
+      <Link
+        href="/blog"
+        class={buttonVariants({ variant: 'outline', size: 'lg' })}
+      >
         Browse Blog
       </Link>
     </div>
   </div>
 </Layout>
-

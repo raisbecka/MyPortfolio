@@ -18,7 +18,10 @@ const MobileMenu = () => {
     }
     document.addEventListener('astro:before-swap', handleViewTransitionStart)
     return () => {
-      document.removeEventListener('astro:before-swap', handleViewTransitionStart)
+      document.removeEventListener(
+        'astro:before-swap',
+        handleViewTransitionStart,
+      )
     }
   }, [])
 
@@ -29,7 +32,12 @@ const MobileMenu = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={(val) => setIsOpen(val)}>
       <DropdownMenuTrigger asChild onClick={() => setIsOpen((val) => !val)}>
-        <Button variant="outline" size="icon" className="md:hidden" title="Menu">
+        <Button
+          variant="outline"
+          size="icon"
+          className="md:hidden"
+          title="Menu"
+        >
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle menu</span>
         </Button>
@@ -44,14 +52,21 @@ const MobileMenu = () => {
                 href={item.href}
                 target={isExternal ? '_blank' : '_self'}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className={`w-full text-lg font-medium capitalize flex items-center gap-2 ${
-                  isInsideLink ? 'text-primary hover:text-primary/80' : isExternal ? 'text-primary/90 hover:text-primary' : ''
+                className={`flex w-full items-center gap-2 text-lg font-medium capitalize ${
+                  isInsideLink
+                    ? 'text-primary hover:text-primary/80'
+                    : isExternal
+                      ? 'text-primary/90 hover:text-primary'
+                      : ''
                 }`}
                 onClick={() => setIsOpen(false)}
               >
                 <span>{item.label}</span>
                 {isExternal && (
-                  <ExternalLink className={`h-4 w-4 opacity-80 flex-shrink-0 ${isInsideLink ? 'text-primary' : ''}`} aria-hidden="true" />
+                  <ExternalLink
+                    className={`h-4 w-4 flex-shrink-0 opacity-80 ${isInsideLink ? 'text-primary' : ''}`}
+                    aria-hidden="true"
+                  />
                 )}
               </a>
             </DropdownMenuItem>

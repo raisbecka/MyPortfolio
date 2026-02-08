@@ -22,17 +22,13 @@ const safeTitle = sanitize(title)
 const pageUrl = url || Astro.url.href
 ---
 
-<section
-  id="disqus-section"
-  class="mt-12"
-  aria-label="Comments section"
->
+<section id="disqus-section" class="mt-12" aria-label="Comments section">
   <div id="disqus_thread" class="min-h-[200px]"></div>
-  
+
   <!-- Loading indicator (hidden once Disqus loads) -->
   <div
     id="disqus-loading"
-    class="flex items-center justify-center py-8 text-sm text-muted-foreground"
+    class="text-muted-foreground flex items-center justify-center py-8 text-sm"
     aria-live="polite"
     aria-label="Loading comments"
   >
@@ -58,16 +54,17 @@ const pageUrl = url || Astro.url.href
    * - Accessibility improvements
    * - Performance optimized
    */
-  (function() {
+  ;(function () {
     'use strict'
 
     // Get shortname - check env var first, then fallback
     const shortname = disqusShortname || 'merox'
-    
+
     if (!shortname || shortname === '') {
       console.warn('Disqus shortname not configured')
       if (loadingIndicator) {
-        loadingIndicator.innerHTML = '<span class="text-muted-foreground">Comments not configured.</span>'
+        loadingIndicator.innerHTML =
+          '<span class="text-muted-foreground">Comments not configured.</span>'
       }
       return
     }
@@ -77,7 +74,7 @@ const pageUrl = url || Astro.url.href
 
     const disqusContainer = document.getElementById('disqus_thread')
     const loadingIndicator = document.getElementById('disqus-loading')
-    
+
     if (!disqusContainer) return
 
     // Hide loading indicator once Disqus loads
@@ -113,7 +110,7 @@ const pageUrl = url || Astro.url.href
               this.page.identifier = identifier
               this.page.url = pageUrl
               this.page.title = title
-            }
+            },
           })
           isLoaded = true
           hideLoading()
@@ -133,7 +130,7 @@ const pageUrl = url || Astro.url.href
         script.src = `https://${shortname}.disqus.com/embed.js`
         script.async = true
         script.setAttribute('data-timestamp', Date.now().toString())
-        
+
         // Error handling
         script.onerror = () => {
           isLoading = false
@@ -183,7 +180,7 @@ const pageUrl = url || Astro.url.href
         {
           rootMargin: '200px', // Start loading 200px before visible
           threshold: 0.1,
-        }
+        },
       )
 
       observer.observe(disqusContainer)
@@ -225,12 +222,14 @@ const pageUrl = url || Astro.url.href
 </script>
 
 <noscript>
-  <div class="mt-12 rounded-lg border bg-muted/50 p-6 text-center text-sm text-muted-foreground">
+  <div
+    class="bg-muted/50 text-muted-foreground mt-12 rounded-lg border p-6 text-center text-sm"
+  >
     <p>
       Please enable JavaScript to view the{' '}
       <a
         href="https://disqus.com/?ref_noscript"
-        class="underline hover:text-foreground"
+        class="hover:text-foreground underline"
         rel="noopener noreferrer"
       >
         comments powered by Disqus

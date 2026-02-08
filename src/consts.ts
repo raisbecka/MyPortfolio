@@ -1,7 +1,7 @@
 import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
-  title: 'Your Blog Name',
+  title: 'Raisbeck',
   description:
     'A brief description of your blog. This will be used in meta tags and social sharing.',
   href: 'https://yourdomain.com',
