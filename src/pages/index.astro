@@ -54,7 +54,7 @@ const websiteSchema = {
   },
 }
 
-// Experience Timeline - Customize with your own experience
+// Experience Timeline - Multiple versions for different job categories
 type ExperienceItem = {
   role: string
   company: string
@@ -64,29 +64,125 @@ type ExperienceItem = {
   key: string
 }
 
-// Customize your experience here
-const experience: ExperienceItem[] = [
+type ExperienceCategory = {
+  label: string
+  value: string
+  items: ExperienceItem[]
+}
+
+// Customize your experiences for different job categories
+const experiences: ExperienceCategory[] = [
   {
-    role: 'Your Current Role',
-    company: 'Current Company',
-    period: '2022 - Present',
-    current: true,
-    icon: 'lucide:briefcase',
-    key: 'Brief description of your current role and key achievements • Add more details about your responsibilities and accomplishments',
+    label: 'IBM Maximo',
+    value: 'ibm-maximo',
+    items: [
+      {
+        role: 'Senior Maximo Consultant',
+        company: 'Enterprise Solutions Inc.',
+        period: '2022 - Present',
+        current: true,
+        icon: 'lucide:briefcase',
+        key: 'Lead implementation of IBM Maximo Application Suite for Fortune 500 clients • Designed and deployed asset management workflows reducing downtime by 35% • Architected custom integrations with SAP and Oracle ERP systems',
+      },
+      {
+        role: 'Maximo Developer',
+        company: 'Industrial Tech Partners',
+        period: '2019 - 2022',
+        icon: 'lucide:settings',
+        key: 'Developed custom Maximo applications using Java and MBO framework • Created automated inspection workflows for manufacturing clients • Implemented Maximo Health and Predictive Maintenance modules',
+      },
+      {
+        role: 'Maximo Administrator',
+        company: 'Asset Management Group',
+        period: '2017 - 2019',
+        icon: 'lucide:server',
+        key: 'Managed Maximo infrastructure for 2000+ users • Configured security roles, workflows, and automation scripts • Optimized database performance reducing report generation time by 50%',
+      },
+    ],
   },
   {
-    role: 'Previous Role',
-    company: 'Previous Company',
-    period: '2020 - 2022',
-    icon: 'lucide:server',
-    key: 'Description of your previous role and achievements • Highlight key projects or responsibilities you had in this position',
+    label: 'Software Development',
+    value: 'software-development',
+    items: [
+      {
+        role: 'Senior Full-Stack Developer',
+        company: 'TechCorp Solutions',
+        period: '2022 - Present',
+        current: true,
+        icon: 'lucide:code',
+        key: 'Architecting scalable microservices using Node.js, TypeScript, and React • Led migration of monolithic application to cloud-native architecture • Mentoring junior developers and establishing coding standards',
+      },
+      {
+        role: 'Full-Stack Developer',
+        company: 'Digital Innovations LLC',
+        period: '2020 - 2022',
+        icon: 'lucide:layers',
+        key: 'Built RESTful APIs serving 1M+ daily requests • Implemented CI/CD pipelines reducing deployment time by 60% • Developed real-time collaboration features using WebSockets',
+      },
+      {
+        role: 'Junior Developer',
+        company: 'StartupHub',
+        period: '2018 - 2020',
+        icon: 'lucide:terminal',
+        key: 'Developed features for SaaS platform using React and Python • Wrote comprehensive unit and integration tests • Participated in agile development processes and code reviews',
+      },
+    ],
   },
   {
-    role: 'Earlier Role',
-    company: 'Earlier Company',
-    period: '2018 - 2020',
-    icon: 'lucide:code',
-    key: 'Description of your earlier role and achievements • Show your career progression and growth over time',
+    label: 'Data Engineering',
+    value: 'data-engineering',
+    items: [
+      {
+        role: 'Senior Data Engineer',
+        company: 'DataDriven Analytics',
+        period: '2022 - Present',
+        current: true,
+        icon: 'lucide:database',
+        key: 'Designed and built data pipelines processing 10TB+ daily using Apache Spark and Airflow • Implemented real-time streaming architecture with Kafka • Reduced data processing costs by 40% through optimization',
+      },
+      {
+        role: 'Data Engineer',
+        company: 'CloudData Systems',
+        period: '2020 - 2022',
+        icon: 'lucide:workflow',
+        key: 'Built ETL pipelines integrating data from 50+ sources using Python and SQL • Migrated on-premise data warehouse to Snowflake • Developed data quality monitoring framework',
+      },
+      {
+        role: 'Data Analyst',
+        company: 'Insights Corp',
+        period: '2018 - 2020',
+        icon: 'lucide:bar-chart',
+        key: 'Created automated reporting dashboards using Tableau and Power BI • Performed data cleaning and transformation using SQL and Python • Collaborated with stakeholders to define KPIs and metrics',
+      },
+    ],
+  },
+  {
+    label: 'Business Intelligence',
+    value: 'business-intelligence',
+    items: [
+      {
+        role: 'BI Architect',
+        company: 'Strategic Analytics Inc.',
+        period: '2022 - Present',
+        current: true,
+        icon: 'lucide:pie-chart',
+        key: 'Led enterprise BI strategy implementation across 5 business units • Designed semantic models in Power BI and Tableau serving 500+ users • Reduced report development time by 70% through standardized frameworks',
+      },
+      {
+        role: 'Senior BI Developer',
+        company: 'DataVision Partners',
+        period: '2020 - 2022',
+        icon: 'lucide:line-chart',
+        key: 'Developed executive dashboards tracking $50M+ in revenue metrics • Implemented self-service BI platform increasing adoption by 200% • Created automated data refresh processes ensuring 99.9% uptime',
+      },
+      {
+        role: 'BI Analyst',
+        company: 'Metrics Solutions',
+        period: '2018 - 2020',
+        icon: 'lucide:trending-up',
+        key: 'Built operational reports and KPI tracking systems • Conducted training sessions for 100+ business users • Automated monthly reporting saving 40 hours per month',
+      },
+    ],
   },
 ]
 ---
@@ -233,46 +329,145 @@ const experience: ExperienceItem[] = [
       </p>
     </div>
 
-    <div class="space-y-6">
-      {
-        experience.map((exp, index) => (
-          <div class="relative">
-            {index < experience.length - 1 && (
-              <div
-                class="bg-border absolute top-8 bottom-0 left-[11px] w-px"
-                aria-hidden="true"
-              />
-            )}
-
-            <div class="flex gap-4">
-              <div
-                class={`ring-background relative z-10 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full ring-4 ${
-                  exp.current
-                    ? 'bg-primary text-primary-foreground shadow-primary/20 shadow-lg'
-                    : 'bg-muted text-muted-foreground'
-                }`}
-              >
-                <Icon name={exp.icon} class="size-3.5" />
-              </div>
-
-              <div class="min-w-0 flex-1 pb-2">
-                <div class="mb-1">
-                  <h3 class="text-lg leading-tight font-semibold">
-                    {exp.role}
-                  </h3>
-                  <p class="text-muted-foreground text-sm">
-                    {exp.company} · {exp.period}
-                  </p>
-                </div>
-                <p class="text-muted-foreground/90 mt-2 text-sm leading-relaxed">
-                  {exp.key}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))
-      }
+    <!-- Category Selector Dropdown -->
+    <div class="mb-6">
+      <label for="experience-category" class="text-foreground mb-2 block text-sm font-medium">
+        Select your area of interest:
+      </label>
+      <div class="relative inline-block w-full max-w-xs">
+        <select
+          id="experience-category"
+          class="border-border bg-background text-foreground focus:ring-ring w-full appearance-none rounded-md border px-4 py-2.5 pr-10 text-sm transition-all focus:border-transparent focus:ring-2 focus:outline-none"
+          style="background-image: none;"
+        >
+          <option value="" disabled selected>Choose a category...</option>
+          {experiences.map((cat) => (
+            <option value={cat.value}>{cat.label}</option>
+          ))}
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+          <svg class="text-muted-foreground h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
     </div>
+
+    <!-- Timeline Container with Overlay -->
+    <div id="timeline-container" class="relative">
+      <!-- Blur Overlay -->
+      <div id="timeline-overlay" class="absolute inset-0 z-10 flex items-center justify-center rounded-lg backdrop-blur-md bg-background/60 transition-opacity duration-[1500ms]">
+        <div class="text-center px-4">
+          <div class="mb-3 flex justify-center">
+            <svg class="text-muted-foreground h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <p class="text-muted-foreground text-sm font-medium">
+            Please select from a category above for relevent experience
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline Content -->
+      <div id="timeline-content" class="space-y-6">
+        {experiences.map((cat, catIndex) => (
+          <div id={`timeline-${cat.value}`} class="timeline-section hidden" data-category={cat.value}>
+            {cat.items.map((exp, index) => (
+              <div class="relative">
+                {index < cat.items.length - 1 && (
+                  <div
+                    class="bg-border absolute top-8 bottom-0 left-[11px] w-px"
+                    aria-hidden="true"
+                  />
+                )}
+
+                <div class="flex gap-4">
+                  <div
+                    class={`ring-background relative z-10 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full ring-4 ${
+                      exp.current
+                        ? 'bg-primary text-primary-foreground shadow-primary/20 shadow-lg'
+                        : 'bg-muted text-muted-foreground'
+                    }`}
+                  >
+                    <Icon name={exp.icon} class="size-3.5" />
+                  </div>
+
+                  <div class="min-w-0 flex-1 pb-2">
+                    <div class="mb-1">
+                      <h3 class="text-lg leading-tight font-semibold">
+                        {exp.role}
+                      </h3>
+                      <p class="text-muted-foreground text-sm">
+                        {exp.company} · {exp.period}
+                      </p>
+                    </div>
+                    <p class="text-muted-foreground/90 mt-2 text-sm leading-relaxed">
+                      {exp.key}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Client-side JavaScript for dropdown interaction -->
+    <script>
+      const categorySelect = document.getElementById('experience-category');
+      const overlay = document.getElementById('timeline-overlay');
+      const timelineSections = document.querySelectorAll('.timeline-section');
+      let hasSelectedCategory = false;
+
+      function showSection(value: string) {
+        timelineSections.forEach(section => {
+          section.classList.add('hidden');
+        });
+        const selectedSection = document.getElementById(`timeline-${value}`);
+        if (selectedSection) {
+          selectedSection.classList.remove('hidden');
+        }
+      }
+
+      function fadeInOverlay(duration: number): Promise<void> {
+        return new Promise((resolve) => {
+          if (!overlay) { resolve(); return; }
+          overlay.style.display = 'flex';
+          overlay.style.transition = `opacity ${duration}ms ease-in-out`;
+          overlay.style.opacity = '1';
+          setTimeout(resolve, duration);
+        });
+      }
+
+      function fadeOutOverlay(duration: number): Promise<void> {
+        return new Promise((resolve) => {
+          if (!overlay) { resolve(); return; }
+          overlay.style.transition = `opacity ${duration}ms ease-in-out`;
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+          setTimeout(() => {
+            overlay.style.display = 'none';
+            resolve();
+          }, duration);
+        });
+      }
+
+      categorySelect?.addEventListener('change', async (e) => {
+        const selectedValue = (e.target as HTMLSelectElement).value;
+
+        if (!hasSelectedCategory) {
+          hasSelectedCategory = true;
+          showSection(selectedValue);
+          fadeOutOverlay(1500);
+        } else {
+          await fadeInOverlay(750);
+          showSection(selectedValue);
+          await fadeOutOverlay(750);
+        }
+      });
+    </script>
   </section>
 
   <!-- Skills & Technologies (Optional) -->
