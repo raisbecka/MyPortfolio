@@ -18,8 +18,8 @@ export function InfiniteScroll({
   className,
   duration = 15000,
   direction = 'normal',
-  containerColor = '#ffffff',
-  showFade = true,
+  containerColor = '#ffffffd3;',
+  showFade = false,
   children,
   pauseOnHover = true,
 }: InfiniteScrollProps) {
@@ -114,12 +114,6 @@ export function InfiniteScroll({
           <div className="flex shrink-0">{children}</div>
         </motion.div>
       </div>
-      {showFade && (
-        <div
-          className="from-background to-background pointer-events-none absolute inset-0 bg-linear-to-r via-transparent sm:bg-gradient-to-r"
-          style={{ '--container-color': containerColor } as React.CSSProperties}
-        />
-      )}
     </div>
   )
 }

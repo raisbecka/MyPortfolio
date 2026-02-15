@@ -3,12 +3,8 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme inline {
-  --font-sans:
-    Geist, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono:
-    Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --font-sans: Geist, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,15 +41,16 @@
 }
 
 :root {
-  --background: hsl(0 0% 100%);
+  --background: #ffffffd3;
   --header-background: hsl(0 0% 89%);
   --foreground: hsl(0 0% 3.9%);
   --primary: hsl(214 95% 52%);
-  --primary-foreground: hsl(0 0% 98%);
+  --primary-foreground: hsl(0, 0%, 98%);
   --secondary: hsl(0 0% 80.1%);
   --secondary-foreground: hsl(0 0% 9%);
   --muted: hsl(0 0% 80.1%);
-  --muted-foreground: hsl(0 0% 40%); /* Improved contrast from 45.1% to 40% */
+  --muted-foreground: hsl(0, 0%, 23%);
+  /* Improved contrast from 45.1% to 40% */
   --accent: hsl(217 91% 96%);
   --accent-foreground: hsl(217 91% 20%);
   --additive: hsl(112 50% 36%);
@@ -73,7 +70,8 @@
   --secondary: hsl(0 0% 18.9%);
   --secondary-foreground: hsl(0 0% 98%);
   --muted: hsl(0 0% 18.9%);
-  --muted-foreground: hsl(0 0% 70%); /* Improved contrast from 63.9% to 70% */
+  --muted-foreground: hsl(0 0% 70%);
+  /* Improved contrast from 63.9% to 70% */
   --accent: hsl(217 91% 20%);
   --accent-foreground: hsl(217 91% 85%);
   --additive: hsl(112 50% 36%);
@@ -85,6 +83,7 @@
 }
 
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -106,13 +105,13 @@
   }
 
   .disable-transitions * {
-    @apply transition-none!;
+    @apply transition-none;
   }
 
   /* Enhanced focus indicators for accessibility */
   /* Only apply to links that don't have custom focus styles */
   a:focus-visible:not([class*='focus-visible']):not([class*='ring']) {
-    @apply ring-ring ring-offset-background ring-2 ring-offset-2 outline-none;
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
 
   /* Remove default browser outline - components handle their own focus styles */
@@ -124,15 +123,15 @@
   }
 
   /* Remove all default input styling that might cause visible rectangles */
-  input[type='text'],
-  input[type='search'] {
+  input[type="text"],
+  input[type="search"] {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
   }
 
-  input[type='text']:not(:focus-visible),
-  input[type='search']:not(:focus-visible) {
+  input[type="text"]:not(:focus-visible),
+  input[type="search"]:not(:focus-visible) {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
@@ -217,14 +216,11 @@
   view-transition-name: none;
 }
 
+
 /* Modern 2025 background effects */
 @supports (backdrop-filter: blur(1px)) {
   .bg-radial-gradient {
-    background: radial-gradient(
-      ellipse at center,
-      transparent 0%,
-      var(--background) 100%
-    );
+    background: radial-gradient(ellipse at center, transparent 0%, var(--background) 100%);
   }
 }
 

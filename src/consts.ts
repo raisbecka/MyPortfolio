@@ -3,9 +3,9 @@ import type { IconMap, SocialLink, Site } from '@/types'
 export const SITE: Site = {
   title: 'Raisbeck',
   description:
-    'A brief description of your blog. This will be used in meta tags and social sharing.',
-  href: 'https://yourdomain.com',
-  author: 'your-author-id',
+    'Full-Stack Enterprise Application Developer, IBM Maximo Product Specialist, and AI evangelist.',
+  href: 'https://andrewraisbeck.com',
+  author: 'raisbecka',
   locale: 'en-US',
   featuredPostCount: 2,
   postsPerPage: 6,
@@ -58,17 +58,17 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'GitHub',
   },
   {
-    href: 'https://twitter.com/username',
-    label: 'Twitter',
+    href: 'https://www.linkedin.com/in/andrew-r-32646786/',
+    label: 'LinkedIn',
   },
   {
-    href: 'mailto:your@email.com',
+    href: 'mailto:raisbecka09@gmail.com',
     label: 'Email',
   },
   {
     href: '/rss.xml',
     label: 'RSS',
-  },
+  }
 ]
 
 export const ICON_MAP: IconMap = {

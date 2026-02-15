@@ -15,8 +15,11 @@ export async function GET(context: APIContext) {
         title: post.data.title,
         description: post.data.description,
         pubDate: post.data.date,
+        // Compute RSS link from post `id`
+        // This example assumes all posts are rendered as `/blog/[id]` routes
         link: `/blog/${post.id}/`,
       })),
+      customData: `<language>${SITE.locale}</language>`,
     })
   } catch (error) {
     console.error('Error generating RSS feed:', error)
