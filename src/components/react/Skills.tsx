@@ -10,7 +10,6 @@ type Category = {
 
 type Technologies = {
   'Systems & Virtualization': Category[]
-  'Networking & Security': Category[]
   'Automation & Orchestration': Category[]
   'Cloud & Infrastructure': Category[]
   'Monitoring & Tools': Category[]
@@ -19,58 +18,53 @@ type Technologies = {
 // Technologies based on CV
 const technologies: Technologies = {
   'Systems & Virtualization': [
-    { text: 'Linux', logo: 'simple-icons:linux' },
+    { text: 'RedHat Enterprise Linux', logo: 'simple-icons:linux' },
     { text: 'Ubuntu', logo: 'mdi:ubuntu' },
-    { text: 'Debian', logo: 'simple-icons:debian' },
     { text: 'Windows Server', logo: 'mdi:windows' },
     { text: 'Proxmox', logo: 'simple-icons:proxmox' },
     { text: 'Docker', logo: 'mdi:docker' },
-    { text: 'Kubernetes', logo: 'mdi:kubernetes' },
-    { text: 'XEN', logo: 'lucide:box' },
-  ],
-  'Networking & Security': [
-    { text: 'CISCO', logo: 'simple-icons:cisco' },
-    { text: 'pfSense', logo: 'simple-icons:pfsense' },
-    { text: 'Fortinet', logo: 'simple-icons:fortinet' },
-    { text: 'Palo Alto', logo: 'simple-icons:paloaltonetworks' },
-    { text: 'StrongSwan', logo: 'lucide:wifi' },
-    { text: 'VLAN', logo: 'lucide:network' },
-    { text: 'CyberArk', logo: 'lucide:lock' },
-    { text: 'Nessus', logo: 'lucide:shield' },
+    { text: 'VMWare Server', logo: 'mdi:vmware' },
   ],
   'Automation & Orchestration': [
     { text: 'Ansible', logo: 'simple-icons:ansible' },
-    { text: 'Terraform', logo: 'simple-icons:terraform' },
-    { text: 'Puppet', logo: 'simple-icons:puppet' },
-    { text: 'SALT', logo: 'simple-icons:saltproject' },
     { text: 'Bash', logo: 'lucide:terminal' },
+    { text: 'Azure DevOps', logo: 'lucide:microsoft-azure-devops' },
     { text: 'Git', logo: 'mdi:git' },
-    { text: 'Flux', logo: 'simple-icons:flux' },
-    { text: 'Rancher', logo: 'simple-icons:rancher' },
+    { text: 'UIPath', logo: 'simple-icons:uipath' },
+    { text: 'Power Automate', logo: 'lucide:workflow' },
+    { text: 'JMeter', logo: 'simple-icons:apachejmeter' },
   ],
   'Cloud & Infrastructure': [
     { text: 'AWS', logo: 'lucide:cloud' },
-    { text: 'Oracle Cloud', logo: 'simple-icons:oracle' },
+    { text: 'Microsoft Azure', logo: 'mdi:microsoft-azure' },
     { text: 'Cloudflare', logo: 'simple-icons:cloudflare' },
-    { text: 'InfiniBand', logo: 'lucide:network' },
-    { text: 'PBS Scheduler', logo: 'lucide:server' },
-    { text: 'ManageIQ', logo: 'lucide:cloud-cog' },
-    { text: 'Talos Linux', logo: 'lucide:box' },
-    { text: 'Cilium CNI', logo: 'simple-icons:cilium' },
+    { text: 'SharePoint', logo: 'mdi:microsoft' },
+    { text: 'IBM MAS/Maximo', logo: 'carbon:bee' },
   ],
   'Monitoring & Tools': [
-    { text: 'Portainer', logo: 'simple-icons:portainer' },
-    { text: 'BAREOS', logo: 'lucide:hard-drive' },
-    { text: 'Asterisk', logo: 'simple-icons:asterisk' },
+    { text: 'Prometheus', logo: 'simple-icons:prometheus' },
+    { text: 'Grafana', logo: 'simple-icons:grafana' },
+    { text: 'OpenTelemetry', logo: 'simple-icons:opentelemetry' },
     { text: 'Apache', logo: 'simple-icons:apache' },
     { text: 'Nginx', logo: 'simple-icons:nginx' },
     { text: 'MySQL', logo: 'simple-icons:mysql' },
+    { text: 'PostgreSQL', logo: 'simple-icons:postgresql' },
+    { text: 'Oracle Database', logo: 'lucide:database-search' },
+    { text: 'Llama.cpp', logo: 'simple-icons:ollama' },
     { text: 'WordPress', logo: 'simple-icons:wordpress' },
-    { text: 'cPanel', logo: 'simple-icons:cpanel' },
+    { text: 'Jira', logo: 'simple-icons:jira' },
+    { text: 'Confluence', logo: 'simple-icons:confluence' },
   ],
 }
 
 const categories = Object.keys(technologies)
+const enlargedIcons = [
+  'simple-icons:apachejmeter',
+  'simple-icons:mysql',
+  'simple-icons:apache',
+  'mdi:vmware',
+  'simple-icons:uipath',
+]
 const groupSize = Math.ceil(categories.length / 3)
 const categoryGroups = [
   categories.slice(0, groupSize),
@@ -106,8 +100,10 @@ const Skills: React.FC = () => {
                       className="tech-badge repo-card border-border bg-card text-muted-foreground mr-5 flex items-center gap-3 rounded-full border p-3 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md"
                       data-tech-name={`${category}-${techIndex}`}
                     >
-                      <span className="bg-muted flex h-10 w-10 items-center justify-center rounded-full p-2 text-lg shadow-inner">
-                        <IconComponent className="tech-icon text-primary" />
+                      <span className="bg-muted flex h-10 w-10 items-center justify-center rounded-full p-2 shadow-inner">
+                        <IconComponent
+                          className={`tech-icon text-primary ${enlargedIcons.includes(tech.logo) ? 'text-2xl' : 'text-lg'}`}
+                        />
                       </span>
                       <span className="text-foreground font-medium">
                         {tech.text}

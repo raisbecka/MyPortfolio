@@ -47,6 +47,10 @@ export const NAV_LINKS: SocialLink[] = [
     label: 'Blog',
   },
   {
+    href: '/projects',
+    label: 'Projects',
+  },
+  {
     href: '/about',
     label: 'About',
   },
@@ -68,7 +72,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     href: '/rss.xml',
     label: 'RSS',
-  }
+  },
 ]
 
 export const ICON_MAP: IconMap = {

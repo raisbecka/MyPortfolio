@@ -3,7 +3,7 @@
  * This helps with tree-shaking by importing icons only when needed
  */
 import { type IconType } from 'react-icons'
-import { FaQuestionCircle } from 'react-icons/fa'
+import { FaQuestionCircle, FaMicrosoft } from 'react-icons/fa'
 import {
   SiLinux,
   SiUbuntu,
@@ -32,7 +32,17 @@ import {
   SiMysql,
   SiWordpress,
   SiCpanel,
+  SiVmware,
+  SiUipath,
+  SiPrometheus,
+  SiGrafana,
+  SiPostgresql,
+  SiApachejmeter,
+  SiOpentelemetry,
+  SiOllama,
 } from 'react-icons/si'
+import { VscAzure, VscAzureDevops } from 'react-icons/vsc'
+import { Bee } from '@carbon/icons-react'
 import {
   Shield,
   Server,
@@ -44,6 +54,8 @@ import {
   Terminal,
   CloudCog,
   Box,
+  Database,
+  Workflow,
 } from 'lucide-react'
 
 // Icon mapping - using direct imports for better tree-shaking
@@ -54,6 +66,7 @@ export const iconMap: { [key: string]: IconType } = {
   'mdi:windows': Server,
   'simple-icons:proxmox': SiProxmox,
   'mdi:docker': SiDocker,
+  'mdi:vmware': SiVmware,
   'mdi:kubernetes': SiKubernetes,
   'lucide:box': Box,
   'simple-icons:cisco': SiCisco,
@@ -69,21 +82,34 @@ export const iconMap: { [key: string]: IconType } = {
   'simple-icons:puppet': SiPuppet,
   'simple-icons:saltproject': SiSaltproject,
   'lucide:terminal': Terminal,
+  'lucide:microsoft-azure-devops': VscAzureDevops,
   'mdi:git': SiGit,
+  'simple-icons:uipath': SiUipath,
+  'simple-icons:apachejmeter': SiApachejmeter,
   'simple-icons:flux': SiFlux,
   'simple-icons:rancher': SiRancher,
   'lucide:cloud': Cloud,
+  'mdi:microsoft-azure': VscAzure,
   'simple-icons:oracle': SiOracle,
   'simple-icons:cloudflare': SiCloudflare,
+  'mdi:microsoft': FaMicrosoft,
   'lucide:server': Server,
   'lucide:cloud-cog': CloudCog,
   'simple-icons:cilium': SiCilium,
   'simple-icons:portainer': SiPortainer,
   'lucide:hard-drive': HardDrive,
   'simple-icons:asterisk': SiAsterisk,
+  'simple-icons:prometheus': SiPrometheus,
+  'simple-icons:grafana': SiGrafana,
+  'simple-icons:opentelemetry': SiOpentelemetry,
+  'simple-icons:ollama': SiOllama,
+  'carbon:bee': Bee,
+  'lucide:workflow': Workflow,
   'simple-icons:apache': SiApache,
   'simple-icons:nginx': SiNginx,
   'simple-icons:mysql': SiMysql,
+  'simple-icons:postgresql': SiPostgresql,
+  'lucide:database-search': Database,
   'simple-icons:wordpress': SiWordpress,
   'simple-icons:cpanel': SiCpanel,
 }

@@ -1,0 +1,41 @@
+---
+import ProjectCard from '@/components/ProjectCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import { SITE } from '@/consts'
+import Layout from '@/layouts/Layout.astro'
+import { getAllProjects } from '@/lib/data-utils'
+
+const allProjects = await getAllProjects()
+---
+
+<Layout class="max-w-5xl">
+  <PageHead slot="head" title="Projects" />
+
+  <Breadcrumbs items={[{ label: 'Projects', icon: 'lucide:folder-open' }]} />
+
+  <section class="flex flex-col gap-8">
+    <!-- Header -->
+    <div class="flex flex-col gap-4">
+      <div>
+        <h1 class="text-3xl font-bold md:text-4xl">Projects</h1>
+        <p class="text-muted-foreground mt-1 font-mono text-sm">
+          A showcase of my work and side projects
+        </p>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid gap-6 sm:grid-cols-2">
+      {allProjects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+
+    {allProjects.length === 0 && (
+      <div class="text-muted-foreground text-center py-12">
+        <p>No projects yet. Check back later!</p>
+      </div>
+    )}
+  </section>
+</Layout>

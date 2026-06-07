@@ -3,6 +3,7 @@ import BlogCard from '@/components/BlogCard.astro'
 import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
 import { ErrorBoundary } from '@/components/react/ErrorBoundary'
+import ExperienceCarousel from '@/components/react/ExperienceCarousel'
 import Skills from '@/components/react/Skills'
 import { buttonVariants } from '@/components/ui/button'
 import { ICON_MAP, SITE, SOCIAL_LINKS } from '@/consts'
@@ -54,102 +55,6 @@ const websiteSchema = {
   },
 }
 
-// Experience Timeline - Multiple versions for different job categories
-type ExperienceItem = {
-  role: string
-  company: string
-  period: string
-  current?: boolean
-  icon: string
-  key: string
-}
-
-type ExperienceCategory = {
-  label: string
-  value: string
-  items: ExperienceItem[]
-}
-
-// Customize your experiences for different job categories
-const experiences: ExperienceCategory[] = [
-  {
-    label: 'IBM Maximo',
-    value: 'ibm-maximo',
-    items: [
-      {
-        role: 'Acting Program Manager - Digital Environmental (in addition to below role)',
-        company: 'The Regional Municipality of York',
-        period: 'Sept 2025 - April 2026',
-        current: true,
-        icon: 'lucide:briefcase',
-        key: 'Successfully lead small team of specialists though a major upgrade (7.6.x -> MAS 9.1), infrastructure change (WebSphere -> RedHat OpenShift), and cloud migration simultaneously - in a little over 6 months.',
-      },
-      {
-        role: 'Maximo Systems Specialist',
-        company: 'The Regional Municipality of York',
-        period: '2019 - present',
-        icon: 'lucide:settings',
-        key: 'Developed multiple custom regulatory applications in both Maximo and EZMaxMobile - used daily • Automated staff scheduling, increasing efficiency by 80-90% • Optimized licensing for staff leading to > 1.2 million in savings • Successfully integrated ERP, GIS, SCADA, and multiple other proprietary, legacy systems',
-      },
-    ],
-  },
-  {
-    label: 'Software Development',
-    value: 'software-development',
-    items: [
-      {
-        role: 'Business Systems Specialist',
-        company: 'The Regional Municipality of York',
-        period: '2019 - Present',
-        current: true,
-        icon: 'lucide:code',
-        key: 'Developed multiple Java enterprise applications from scratch • Spearheaded implementation of modern CI/CD pipelines in Azure DevOps - reducing deployment time by 80% • Setup performance monitoring infrastructure using Prometheus and Grafana',
-      },
-      {
-        role: 'Business Intelligence and Process Management Analyst',
-        company: 'The Regional Municipality of York',
-        period: '2017 - 2019',
-        icon: 'lucide:layers',
-        key: 'Built secure portal for Childcare Operators to submit and track funding applications online • ***SEE RESUMES***',
-      },
-      {
-        role: 'Junior Developer',
-        company: 'StartupHub',
-        period: '2018 - 2020',
-        icon: 'lucide:terminal',
-        key: 'Developed features for SaaS platform using React and Python • Wrote comprehensive unit and integration tests • Participated in agile development processes and code reviews',
-      },
-    ],
-  },
-  {
-    label: 'Business Intelligence & Data Analytics',
-    value: 'business-intelligence',
-    items: [
-      {
-        role: 'Senior BI Developer',
-        company: 'Strategic Analytics Inc.',
-        period: '2022 - Present',
-        current: true,
-        icon: 'lucide:pie-chart',
-        key: 'Successfully bridged on-prem and cloud systems using Denodo data virtualization • Designed semantic models in Power BI and Tableau serving 500+ users • Reduced report development time by 70% through standardized frameworks',
-      },
-      {
-        role: 'Senior BI Developer',
-        company: 'DataVision Partners',
-        period: '2020 - 2022',
-        icon: 'lucide:line-chart',
-        key: 'Developed executive dashboards tracking $50M+ in revenue metrics • Implemented self-service BI platform increasing adoption by 200% • Created automated data refresh processes ensuring 99.9% uptime',
-      },
-      {
-        role: 'BI Analyst',
-        company: 'Metrics Solutions',
-        period: '2018 - 2020',
-        icon: 'lucide:trending-up',
-        key: 'Built operational reports and KPI tracking systems • Conducted training sessions for 100+ business users • Automated monthly reporting saving 40 hours per month',
-      },
-    ],
-  },
-]
 ---
 
 <Layout class="max-w-5xl" transition:persist="home-layout">
@@ -231,7 +136,7 @@ const experiences: ExperienceCategory[] = [
 			<Icon name="lucide:arrow-right" class="size-4" />
 			</Link>
 			<Link
-			href="/about"
+			href="/projects"
 			class={`${buttonVariants({ variant: 'outline', size: 'lg' })} w-27`}
 			>
 			Projects
@@ -285,155 +190,15 @@ const experiences: ExperienceCategory[] = [
     </div>
 </section>
 
-  <!-- Experience Timeline -->
+  <!-- Experience Carousel -->
   <section class="mt-6">
-
     <div class="mb-6">
       <h2 class="mb-2 text-2xl font-semibold">Experience</h2>
       <p class="text-muted-foreground text-sm">
         Professional journey and achievements
       </p>
     </div>
-
-    <!-- Category Selector Dropdown -->
-    <div class="mb-6">
-      <label for="experience-category" class="text-foreground mb-2 block text-sm font-medium">
-        Select your area of interest:
-      </label>
-      <div class="relative inline-block w-full max-w-xs">
-        <select
-          id="experience-category"
-          class="border-border bg-background text-foreground focus:ring-ring w-full appearance-none rounded-md border px-4 py-2.5 pr-10 text-sm transition-all focus:border-transparent focus:ring-2 focus:outline-none"
-          style="background-image: none;"
-        >
-          <option value="" disabled selected>Choose a category...</option>
-          {experiences.map((cat) => (
-            <option value={cat.value}>{cat.label}</option>
-          ))}
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-          <svg class="text-muted-foreground h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Timeline Container with Overlay -->
-    <div id="timeline-container" class="relative">
-      <!-- Blur Overlay -->
-      <div id="timeline-overlay" class="absolute left-0 inset-0 z-50 flex items-center justify-center rounded-lg backdrop-blur-md bg-background/60 transition-opacity duration-[1500ms]">
-        <div class="text-center px-4">
-          <div class="mb-3 flex justify-center">
-            <svg class="text-muted-foreground h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-            </svg>
-          </div>
-          <p class="text-muted-foreground text-sm font-medium">
-            Please select from a category above for relevent experience
-          </p>
-        </div>
-      </div>
-
-      <!-- Timeline Content -->
-      <div id="timeline-content" class="space-y-6">
-        {experiences.map((cat, catIndex) => (
-          <div id={`timeline-${cat.value}`} class={`timeline-section ${catIndex !== 0 ? 'hidden' : ''}`} data-category={cat.value}>
-            {cat.items.map((exp, index) => (
-              <div class="relative">
-                {index < cat.items.length - 1 && (
-                  <div
-                    class="bg-border absolute top-8 bottom-0 left-[11px] w-px"
-                    aria-hidden="true"
-                  />
-                )}
-
-                <div class="flex gap-4">
-                  <div
-                    class={`ring-background relative z-10 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full ring-4 ${
-                      exp.current
-                        ? 'bg-primary text-primary-foreground shadow-primary/20 shadow-lg'
-                        : 'bg-muted text-muted-foreground'
-                    }`}
-                  >
-                    <Icon name={exp.icon} class="size-3.5" />
-                  </div>
-
-                  <div class="min-w-0 flex-1 pb-2">
-                    <div class="mb-1">
-                      <h3 class="text-lg leading-tight font-semibold">
-                        {exp.role}
-                      </h3>
-                      <p class="text-muted-foreground text-sm">
-                        {exp.company} · {exp.period}
-                      </p>
-                    </div>
-                    <p class="text-muted-foreground/90 mt-2 text-sm leading-relaxed">
-                      {exp.key}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <!-- Client-side JavaScript for dropdown interaction -->
-    <script>
-      const categorySelect = document.getElementById('experience-category');
-      const overlay = document.getElementById('timeline-overlay');
-      const timelineSections = document.querySelectorAll('.timeline-section');
-      let hasSelectedCategory = false;
-
-      function showSection(value: string) {
-        timelineSections.forEach(section => {
-          section.classList.add('hidden');
-        });
-        const selectedSection = document.getElementById(`timeline-${value}`);
-        if (selectedSection) {
-          selectedSection.classList.remove('hidden');
-        }
-      }
-
-      function fadeInOverlay(duration: number): Promise<void> {
-        return new Promise((resolve) => {
-          if (!overlay) { resolve(); return; }
-          overlay.style.display = 'flex';
-          overlay.style.transition = `opacity ${duration}ms ease-in-out`;
-          overlay.style.opacity = '1';
-          setTimeout(resolve, duration);
-        });
-      }
-
-      function fadeOutOverlay(duration: number): Promise<void> {
-        return new Promise((resolve) => {
-          if (!overlay) { resolve(); return; }
-          overlay.style.transition = `opacity ${duration}ms ease-in-out`;
-          overlay.style.opacity = '0';
-          overlay.style.pointerEvents = 'none';
-          setTimeout(() => {
-            overlay.style.display = 'none';
-            resolve();
-          }, duration);
-        });
-      }
-
-      categorySelect?.addEventListener('change', async (e) => {
-        const selectedValue = (e.target as HTMLSelectElement).value;
-
-        if (!hasSelectedCategory) {
-          hasSelectedCategory = true;
-          showSection(selectedValue);
-          fadeOutOverlay(1500);
-        } else {
-          await fadeInOverlay(750);
-          showSection(selectedValue);
-          await fadeOutOverlay(750);
-        }
-      });
-    </script>
+    <ExperienceCarousel client:load />
   </section>
 
   <!-- Skills & Technologies (Optional) -->
