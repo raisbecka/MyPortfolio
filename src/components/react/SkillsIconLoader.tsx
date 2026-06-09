@@ -40,6 +40,8 @@ import {
   SiApachejmeter,
   SiOpentelemetry,
   SiOllama,
+  SiJira,
+  SiConfluence,
 } from 'react-icons/si'
 import { VscAzure, VscAzureDevops } from 'react-icons/vsc'
 import { Bee } from '@carbon/icons-react'
@@ -112,6 +114,8 @@ export const iconMap: { [key: string]: IconType } = {
   'lucide:database-search': Database,
   'simple-icons:wordpress': SiWordpress,
   'simple-icons:cpanel': SiCpanel,
+  'simple-icons:jira': SiJira,
+  'simple-icons:confluence': SiConfluence,
 }
 
 export function getIcon(logo: string): IconType {
