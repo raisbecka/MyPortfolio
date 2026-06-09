@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import {
@@ -163,11 +163,8 @@ function TimelineItem({
 }
 
 export default function ExperienceCarousel() {
-  const autoplayRef = useRef(
-    Autoplay({ delay: 10000, stopOnInteraction: true, stopOnMouseEnter: true }),
-  )
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    autoplayRef.current,
+    Autoplay({ delay: 10000, stopOnInteraction: true, stopOnMouseEnter: true }),
   ])
   const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -186,6 +183,7 @@ export default function ExperienceCarousel() {
     emblaApi.on('reInit', onSelect)
     return () => {
       emblaApi.off('select', onSelect)
+      emblaApi.off('reInit', onSelect)
     }
   }, [emblaApi, onSelect])
 
