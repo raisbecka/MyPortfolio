@@ -28,25 +28,234 @@ const personSchema = {
       <div>
         <h1 class="text-3xl font-bold md:text-4xl">About</h1>
         <p class="text-muted-foreground mt-1 font-mono text-sm">
-          Learn more about this blog
+          Learn more about Drewman
         </p>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="prose prose-sm dark:prose-invert max-w-none space-y-6">
-      <p class="text-muted-foreground leading-relaxed">
-        Welcome to <strong class="text-primary">{SITE.title}</strong>! This is a
-        placeholder about page. Customize this content to tell your visitors
-        about yourself, your blog, or your interests.
+      <div style="text-align: center">
+        <strong class="text-primary" style="font-size: x-large">Andrew Raisbeck's Portfolio Site</strong>
+      </div>
+      <p class="text-muted-foreground leading-relaxed"></p>
+      <br>
+      <div>
+        <img
+                src="/Lord_Poopin_Nommin.jpg"
+                alt="Lord Poopin' Nommin' (Epstein Choupenstein - aka Choupie)"
+                class="h-auto object-cover w-50 sm:w-[325px] lg:w-[440px]"
+                />
+      </div>
+        I'm a <div id="container" style="display: inline">Fullstack Developer</div> with 12+ years of experience working directly with 
+        clients - mostly in the Canadian Public sector. Working for the government means working within <i>tiiight</i> 
+        resource contraints - conditions that <del>encourage</del> **<strong>require</strong>**) creative thinking in order to 
+        succeed. I have had the opportunity to wear many hats, work on virtually all aspects of modern software development.
+        <br>
+        <br>
+        For the last 7 years, I have worked almost exclusively with IBM Maximo (now Maximo Application Suite). I am responsible for administration, support, development, 
+        system integrations... anything to do with Maximo. I have spoken at the Canadian Maximo User Group conference in 
+        Toronto on a few occasions, and I love any opportunity I can get to share what I've learned with those who are interested. 
+        <br>
+        <br>
+        I started this website to:<br>
+        <code>
+        - Showcase cool projects I have worked on<br>
+        - Blog about Maximo and other areas of interest (such as AI, automation, and finance)<br>
+        - Connect with others<br>
+        - Increase visibility with potential employers
+         </code>
+        <br>
+        <br>
+        When I'm <i>not</i> working, I enjoy weightlifting, running, programming (what did you expect - I'm a <strong>N.E.R.D</strong>), camping, 
+        and playing baseball.
+        <br>
+        <br>
+        If you'd like to connect about a job, about Maximo, or about literally anything else, hit me up! Send me an email.
+        <br>
+        <br>
+        - Andrew Raisbeck
+
+
       </p>
 
-      <p class="text-muted-foreground leading-relaxed">
-        You can edit this page by modifying <code
-          class="bg-muted rounded px-1.5 py-0.5 text-sm"
-          >src/pages/about.astro</code
-        >.
-      </p>
     </div>
   </section>
+  <style>
+  /* ─── CONTAINER: defines the text style ─── */
+  #container {
+    font-family: 'Arial Black', 'Impact', 'Helvetica Neue', sans-serif;
+    font-weight: 900;
+    color: #fff;
+    display: inline-flex;   /* better inline behaviour */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0 4px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 5px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .letter {
+    display: inline-block;
+    font: inherit;
+    transform-origin: center bottom;
+    will-change: transform;
+    text-shadow: 0 0 20px currentColor, 0 0 60px currentColor, 0 0 100px currentColor;
+    opacity: 0.92;
+    padding: 0 0.01em;
+    line-height: 1.2;
+    transform: scale(1) !important;
+  }
+  .letter.space {
+    width: 0.45em;
+    padding: 0;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    pointer-events: none;
+  }
+  @media (max-width: 600px) {
+    #container { padding: 16px 20px; }
+    .letter.space { width: 0.3em; }
+  }
+  @media (max-width: 400px) {
+    .letter.space { width: 0.25em; }
+  }
+</style>
+
+<!-- Astro: is:inline prevents bundling & ensures script runs as-is -->
+<script is:inline>
+  (() => {
+    'use strict';
+
+    const WAVE_DUR = 2.0;
+    const PAUSE_DUR = WAVE_DUR * 2;
+    const AMP = 0.55;
+    const SIGMA = 0.16;
+    const START = -0.45;
+    const END = 1.45;
+    const RAINBOW = ['#FF1A1A', '#FF8C00', '#FFD700', '#00E676', '#2979FF', '#7C4DFF', '#E040FB'];
+
+    const container = document.getElementById('container');
+    if (!container) return;
+
+    // Build letter spans
+    const rawText = container.textContent.trim();
+    const chars = rawText.split('');
+    container.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    const letters = [];
+
+    chars.forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'letter';
+      if (ch === ' ') {
+        span.classList.add('space');
+        span.textContent = '\u00A0';
+      } else {
+        span.textContent = ch;
+        const color = RAINBOW[i % RAINBOW.length];
+        span.style.color = color;
+        span.dataset.color = color; // store for shadow
+      }
+      letters.push(span);
+      frag.appendChild(span);
+    });
+    container.appendChild(frag);
+
+    const N = letters.length;
+    if (N === 0) return;
+
+    // ─── ANIMATION STATE ──────────────────────────────────────
+    let phase = 'wave';
+    let waveTime = 0;
+    let pauseTime = 0;
+    let lastTimestamp = performance.now();
+
+    // ─── UPDATE WITH !important ──────────────────────────────
+    function update(center) {
+      for (let i = 0; i < N; i++) {
+        const el = letters[i];
+        if (el.classList.contains('space')) {
+          el.style.setProperty('transform', 'scale(1)', 'important');
+          el.style.setProperty('text-shadow', 'none', 'important');
+          continue;
+        }
+        const pos = (N > 1) ? (i / (N - 1)) : 0.5;
+        const d = pos - center;
+        const gauss = Math.exp(-(d * d) / (2 * SIGMA * SIGMA));
+        const s = 1 + AMP * gauss;
+        // Force transform with !important
+        el.style.setProperty('transform', `scale(${s})`, 'important');
+        // Force text-shadow with !important, using the letter's color
+        const color = el.dataset.color || '#ffffff';
+        const intensity = 0.5 + 0.5 * s;
+        const shadow = `
+          0 0 ${20 * intensity}px ${color},
+          0 0 ${60 * intensity}px ${color},
+          0 0 ${100 * intensity}px ${color}
+        `;
+        el.style.setProperty('text-shadow', shadow, 'important');
+        // also ensure display: inline-block so transform works
+        el.style.setProperty('display', 'inline-block', 'important');
+      }
+    }
+
+    function resetAll() {
+      for (let i = 0; i < N; i++) {
+        const el = letters[i];
+        el.style.setProperty('transform', 'scale(1)', 'important');
+        if (!el.classList.contains('space')) {
+          const color = el.dataset.color || '#ffffff';
+          el.style.setProperty(
+            'text-shadow',
+            `0 0 20px ${color}, 0 0 60px ${color}, 0 0 100px ${color}`,
+            'important'
+          );
+        } else {
+          el.style.setProperty('text-shadow', 'none', 'important');
+        }
+      }
+    }
+
+    // ─── ANIMATION LOOP ────────────────────────────────────────
+    function loop(timestamp) {
+      const now = performance.now();
+      const dt = Math.min((now - lastTimestamp) / 1000, 0.05);
+      lastTimestamp = now;
+
+      if (phase === 'wave') {
+        waveTime += dt;
+        if (waveTime >= WAVE_DUR) {
+          waveTime = WAVE_DUR;
+          phase = 'pause';
+          pauseTime = 0;
+          resetAll();
+        } else {
+          const prog = waveTime / WAVE_DUR;
+          const center = START + prog * (END - START);
+          update(center);
+        }
+      } else {
+        pauseTime += dt;
+        if (pauseTime >= PAUSE_DUR) {
+          phase = 'wave';
+          waveTime = 0;
+          update(START);
+        } else {
+          resetAll();
+        }
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    // ─── START ──────────────────────────────────────────────────
+    resetAll();
+    update(START);
+    requestAnimationFrame(loop);
+  })();
+</script>
 </Layout>

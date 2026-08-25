@@ -42,6 +42,7 @@ import {
   SiOllama,
   SiJira,
   SiConfluence,
+  SiRedhatopenshift,
 } from 'react-icons/si'
 import { VscAzure, VscAzureDevops } from 'react-icons/vsc'
 import { Bee } from '@carbon/icons-react'
@@ -65,6 +66,7 @@ export const iconMap: { [key: string]: IconType } = {
   'simple-icons:linux': SiLinux,
   'mdi:ubuntu': SiUbuntu,
   'simple-icons:debian': SiDebian,
+  'simple-icons:redhatopenshift': SiRedhatopenshift,
   'mdi:windows': Server,
   'simple-icons:proxmox': SiProxmox,
   'mdi:docker': SiDocker,

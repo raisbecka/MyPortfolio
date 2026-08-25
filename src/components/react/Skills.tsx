@@ -22,6 +22,7 @@ const technologies: Technologies = {
     { text: 'Ubuntu', logo: 'mdi:ubuntu' },
     { text: 'Windows Server', logo: 'mdi:windows' },
     { text: 'Proxmox', logo: 'simple-icons:proxmox' },
+    { text: 'RedHat Openshift', logo: 'simple-icons:redhatopenshift' },
     { text: 'Docker', logo: 'mdi:docker' },
     { text: 'VMWare Server', logo: 'mdi:vmware' },
   ],
