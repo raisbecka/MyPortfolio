@@ -1,0 +1,84 @@
+---
+title: "Sub-Agent Reporter - An Opencode Plugin"
+description: "You're going to LOVE my plugin - Slap-Chop Guy."
+date: 2026-09-01
+tags: ["AI", "opencode", "agent", "llm", "plugin", "FOSS", "Open Source"]
+draft: false
+---
+
+import Callout from '@/components/Callout.astro'
+
+## The problem
+
+If you've ever run OpenCode on unattended long-running tasks (such as agentic playwright automation, iterative self-improvement workflows on a particular algorithm, etc.), you'll know about
+the <code>opencode run</code> command; Instead of firing up the terminal UI (TUI), you can run opencode as a standard shell command and get results directly in the shell - which is great for 
+running an agent as part of a shell script, or perhaps a <b>Ralph Loop</b>.
+
+What you will quickly realize - however - is that if the primary agent decides to invoke a subagent for a particular task, you cannot see what that subagent is doing. In the TUI, you can toggle 
+back and forth between the primary and secondary agents, but with opencode run, there is no interface to do this, so by default you see no output until the subagent either fails or completes it's task.
+This might work for some workflows, but if you want to trace operations or debug your prompt, you will be severely limited. 
+
+## The solution
+This plugin solves the issue identified above; it pipes the output and/or actions taken by the subagent (or even multiple in parallel) to stdout and allows you to see exactly what your subagents are up to!
+
+## Example output
+
+Here is approximately what the default output of Opencode run might look like <b>without</b> my plugin:
+```bash
+I'll investigate the authentication error handling.
+
+[explore subagent running...]
+
+Authentication errors are handled primarily in src/auth/errors.ts.
+The API middleware catches AuthError and converts it into a
+401 response.
+```
+<br/>
+And here is what the output looks like AFTER installing my plugin:<br/>
+```bash
+I'll investigate the authentication error handling.
+
+Explore 1: -> grep "AuthError" src/
+Explore 1: -> read src/auth/errors.ts
+Explore 1: -> read src/api/middleware/auth.ts
+Explore 1: Found the authentication error handler in middleware.ts
+
+Explore 1: -> read src/auth/token.ts
+Explore 1: Token validation throws AuthError on invalid credentials
+
+Explore 1: Summarized findings and returned result
+**** [EXPLORE FINISHED] ****
+
+Authentication errors are handled primarily in src/auth/errors.ts.
+The API middleware catches AuthError and converts it into a
+401 response.
+```
+<br/>
+The difference is night-and-day; you can clearly see exactly what the subagents are doing. The agent identifier makes it easy to see which subagent is doing what, and if multiple subagents of the same type run in parallel, their
+tags are enumerated so you can distinguish between them!
+
+## How it works
+
+Opencode CLI features [first-class support for plugins](https://opencode.ai/docs/plugins/). If you create a plugin and define it in your opencode.json config file, it will be installed by bun (via <code>bun install</code>) when
+Opencode next starts up. 
+
+The opencode executable fires many events as it operates, and the plugin is able to hook message/tool related events to extract information such as:
+
+1. Which agent sent the message?
+2. The content of the message?
+3. The action taken?<br/>
+etc...
+
+It compiles this information on the fly into a nice, human readable format for the user and pipes it to stdout. It's a fairly simple plugin.
+
+## Repository
+
+You can find the repo here: https://github.com/raisbecka/opencode-subagent-output. As my first public repository, I managed to get this project included in the [Awesome Opencode showcase repository](https://github.com/awesome-opencode/awesome-opencode)!
+
+
+Since then, the repo has picked up 7 stars and I've merged improvements from a contributor - who resolved a graphical issue that I had known about but hadn't gotten time to fix. The open source community is pretty damn cool. 
+
+In fact, if you ask ChatGPT how to get output from your subagents while running Opencode unattended, it will recommend my repository to you:
+
+![ChatGPT mentioning my repository](./public/opencode-reporter.png)
+
