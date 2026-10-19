@@ -1,0 +1,62 @@
+---
+title: "Sub-Agent Reporter Survives OpenCode V2"
+description: "OpenCode V2 ate my plugin's event stream. So I taught it two dialects."
+date: 2026-10-19
+tags: ["AI", "opencode", "agent", "llm", "plugin", "FOSS", "Open Source"]
+draft: false
+---
+
+import Callout from '@/components/Callout.astro'
+
+## The update
+
+A while back I wrote a little [OpenCode plugin](https://github.com/raisbecka/opencode-subagent-output) that gives your subagents a voice when you run `opencode run` headless. It streams what each subagent is doing to stdout, so you are no longer staring at a terminal that says nothing for ten minutes and then dumps the whole answer at you.
+
+Then OpenCode shipped V2. And V2 is not a version bump. It is a rewrite.
+
+The old CLI was one process. You ran `opencode run`, the plugin loaded in that same process, and the plugin wrote straight to the stdout you were already reading. Simple. V2 split that into a thin client and a separate server process. The plugin now loads in the server. The client you are typing into talks to the server over the wire.
+
+On top of that, V2 renamed the entire event stream. The `message.*` events my plugin was hooked into are gone. In their place: `session.created`, `session.step.started`, `session.tool.called`, `session.text.ended`, and friends. The payload moved from `event.properties` to `event.data`.
+
+## The damage
+
+I upgraded, ran a task, and got nothing. A completely silent subagent, exactly the problem the plugin exists to fix.
+
+Two things had broken, and a third was hiding in the wings:
+
+1. My event hooks listened for `message.part.updated`. V2 never fires that. No events, no output.
+2. My plugin wrote to stdout. In V2 the server process's stdout is `/dev/null`. Only its stderr reaches your terminal, and only under certain flags. So even if the events had arrived, the lines would have vanished into the void.
+3. My version check imported the `@opencode/plugin` package to decide which API to use. That package is V2-only. Under V1 it does not resolve, so the import blew up and my "am I on V2?" check reported V2 in both cases.
+
+<Callout variant="tip">
+**Rule of thumb:** if your "which version am I on" check depends on importing a package that only exists on one side, you do not have a check. You have a coin flip with extra steps.
+</Callout>
+
+## The fix
+
+The fix is one file that speaks both dialects. The default export now carries two shapes at once: a V2 `{ id, setup }` object and a V1 `server()` method. V2 reads the `id` and `setup` and ignores `server()`. V1 (1.18.29 and up) calls `server()` and ignores `setup`. Same file, loads on both.
+
+Underneath, both versions feed into one shared reporting core. All the session-tree tracking, instance numbering, dedup, and formatting lives in that core exactly once. Only the thin adapters differ, because that is the only thing that actually changed between V1 and V2: the shape of the events.
+
+A few specific things had to change for V2:
+
+- **Detect the version from argv, not from a package.** V2 loads the plugin in a process whose argv contains `serve`. V1 runs it in a process whose argv contains `run`. That is a reliable signal, and it does not require importing anything that might not exist.
+- **Write to stderr on V2.** The server's stdout is discarded, so the report lines go to stderr, which is the one stream that can reach your terminal.
+- **Adopt the root session.** In V2 the root session's `session.created` never reaches the plugin, because the client creates the root before the server-side subscription starts. So the plugin now adopts the first subagent's parent as the root.
+- **Require an explicit opt-in on V2.** The server process is shared by both `run` and the TUI, so it cannot tell them apart. Auto-enabling would shred the TUI's rendered screen, so V2 stays silent unless you set `SUBAGENT_REPORTER_ENABLED=1`.
+
+The output, for what it is worth, looks like this:
+
+![Subagent reporter output on OpenCode V2](/subagent-reporter-v2.png)
+
+## Lessons learned
+
+A few things I would have liked to know before I sat down with this.
+
+First, the event stream is the contract, and it will change under you. I had built the plugin on the assumption that `message.*` events were a stable surface. They were not. When you depend on another project's internals, assume the internals are a suggestion, not a promise.
+
+Second, when you have to support two generations of an API, build one core and two thin adapters. Do not fork the logic. The moment the session tracking, the dedup, and the formatting exist in two places, you will fix a bug in one and forget the other, and the two versions will quietly drift apart.
+
+Third, and this one cost me the most time: detect the environment from signals that exist in both worlds. The version check that imported a V2-only package was the kind of bug that passes your tests and fails in the wild, because the failure mode is "silently wrong" rather than "loudly broken."
+
+The plugin is out, and it works on both V1 and V2 from a single file. You can find it [here](https://github.com/raisbecka/opencode-subagent-output). If you are on V2 and you want your subagents to stop being a black box, install it and turn the env var on.
