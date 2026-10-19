@@ -90,7 +90,7 @@ const experiences: ExperienceCategory[] = [
       },
     ],
   },
-  {
+  /*{
     label: 'Business Intelligence & Data Analytics',
     value: 'business-intelligence',
     items: [
@@ -117,7 +117,7 @@ const experiences: ExperienceCategory[] = [
         key: 'Built operational reports and KPI tracking systems • Conducted training sessions for 100+ business users • Automated monthly reporting saving 40 hours per month',
       },
     ],
-  },
+  },*/
 ]
 
 function TimelineItem({
