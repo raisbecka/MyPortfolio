@@ -1,6 +1,4 @@
 ---
-import { SITE } from '@/consts'
-
 interface Props {
   title: string
   url?: string
@@ -8,64 +6,49 @@ interface Props {
 
 const { title, url } = Astro.props
 const pageUrl = url || Astro.url.href
-
-// giscus is backed by GitHub Discussions on this repo.
-// These values come from the giscus.app "Generate code" output.
-const repo = 'raisbecka/MyPortfolio'
-const repoId = 'R_kgDOOsRljw'
-const category = 'Blog Comments'
-const categoryId = 'DIC_kwDOOsRlj84DJroM'
-// Map each post to a discussion by its URL path (e.g. /blog/opencode-v2/).
-const mapping = 'pathname'
-const inputPosition = 'bottom'
-const locale = SITE.locale.split('-')[0] || 'en'
 ---
 
 <section id="giscus-section" class="mt-12" aria-label="Comments section">
-  <div id="giscus-comments" class="min-h-[200px]"></div>
-
-  <!-- Loading indicator (hidden once giscus loads) -->
-  <div
-    id="giscus-loading"
-    class="text-muted-foreground flex items-center justify-center py-8 text-sm"
-    aria-live="polite"
-    aria-label="Loading comments"
-  >
-    <span>Loading comments...</span>
-  </div>
+  <!--
+    Standard giscus embed (config from giscus.app "Generate code").
+    giscus handles lazy loading (data-loading="lazy") and, with Astro's
+    ClientRouter, a fresh script element is injected per page, so each post
+    resolves its own discussion via the pathname mapping. No custom loader.
+  -->
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="raisbecka/MyPortfolio"
+    data-repo-id="R_kgDOOsRljw"
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOOsRlj84DJroM"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+  ></script>
 </section>
 
-<script
-  is:inline
-  define:vars={{
-    repo,
-    repoId,
-    category,
-    categoryId,
-    mapping,
-    inputPosition,
-    locale,
-    pageUrl,
-  }}
->
+<script is:inline>
   /**
-   * giscus comments (backed by GitHub Discussions).
-   * - giscus's own data-loading="lazy" defers the widget until scrolled into view
-   * - Follows the site's light/dark theme via data-theme
-   * - Reloads per-post on Astro view transitions
+   * Keep giscus in sync with the site's light/dark theme.
+   * giscus defaults to preferred_color_scheme (OS setting); the site has a
+   * manual toggle that sets <html data-theme>. We forward theme changes to
+   * the giscus iframe and sync once when the lazy-loaded iframe appears.
    *
-   * NOTE: Astro hoists is:inline scripts into <head>, so this runs BEFORE the
-   * <body> exists. All DOM lookups are therefore deferred to DOMContentLoaded.
+   * NOTE: Astro hoists is:inline scripts into <head>, so this runs before
+   * <body> exists. Only observer registration happens here (head-safe);
+   * everything else is deferred.
    */
   ;(function () {
     'use strict'
 
-    var container = null
-    var loadingIndicator = null
-    var isLoaded = false
-
-    // giscus theme values we use: light | dark (matches the site's data-theme)
-    function currentTheme() {
+    function siteTheme() {
       return (
         document.documentElement.getAttribute('data-theme') === 'dark'
           ? 'dark'
@@ -73,113 +56,37 @@ const locale = SITE.locale.split('-')[0] || 'en'
       )
     }
 
-    function hideLoading() {
-      if (loadingIndicator) loadingIndicator.style.display = 'none'
-    }
-
-    function showError() {
-      if (loadingIndicator) {
-        loadingIndicator.innerHTML =
-          '<span class="text-muted-foreground">Comments are unavailable right now. ' +
-          '<a href="https://giscus.app" class="underline">Why?</a></span>'
-        loadingIndicator.setAttribute('role', 'alert')
-      }
-    }
-
-    // Keep giscus in sync with the site theme.
     function syncTheme() {
-      var scripts = document.querySelectorAll('script[data-giscus-client]')
-      for (var i = 0; i < scripts.length; i++) {
-        scripts[i].setAttribute('data-theme', currentTheme())
+      if (window.giscus) {
+        window.giscus.dispatchEvent(
+          new CustomEvent('themechange', { detail: { theme: siteTheme() } }),
+        )
       }
     }
 
-    var themeObserver = new MutationObserver(function () {
-      if (isLoaded) syncTheme()
+    // Re-sync whenever the site theme toggle changes <html data-theme>.
+    new MutationObserver(function () {
+      syncTheme()
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
     })
 
-    function loadGiscus() {
-      if (isLoaded) return
-      // If a giscus client already exists (view transition), just reload it.
-      if (window.giscus) {
-        isLoaded = true
-        hideLoading()
-        window.giscus.dispatchEvent(
-          new CustomEvent('reload', { detail: { reason: 'navigation' } }),
-        )
-        return
-      }
-
-      var script = document.createElement('script')
-      script.src = 'https://giscus.app/client.js'
-      script.async = true
-      script.crossOrigin = 'anonymous'
-      script.setAttribute('data-giscus-client', 'true')
-      script.setAttribute('data-repo', repo)
-      script.setAttribute('data-repo-id', repoId)
-      script.setAttribute('data-category', category)
-      script.setAttribute('data-category-id', categoryId)
-      script.setAttribute('data-mapping', mapping)
-      script.setAttribute('data-strict', '0')
-      script.setAttribute('data-reactions-enabled', '1')
-      script.setAttribute('data-emit-metadata', '0')
-      script.setAttribute('data-input-position', inputPosition)
-      script.setAttribute('data-loading', 'lazy')
-      script.setAttribute('data-theme', currentTheme())
-      script.setAttribute('data-lang', locale)
-
-      script.onerror = function () {
-        showError()
-      }
-      script.onload = function () {
-        isLoaded = true
-        hideLoading()
+    // Sync once when the lazy-loaded giscus iframe appears in the DOM.
+    // Observe <html> (not <body>) because this runs before <body> exists.
+    var bodyObserver = new MutationObserver(function () {
+      var frame = document.querySelector('iframe.giscus-frame')
+      if (frame) {
         syncTheme()
+        // The iframe's content window (window.giscus) may not be attached
+        // until the iframe finishes loading, so sync again on load.
+        frame.addEventListener('load', syncTheme)
+        bodyObserver.disconnect()
       }
-
-      // Append into the comments container (in <body>), not <head>: giscus
-      // inserts its iframe next to this script, so it must be in the visible
-      // DOM or it renders at 0x0 and is invisible.
-      ;(container || document.body).appendChild(script)
-    }
-
-    // Resolve DOM refs + start the observer. Must run after <body> exists.
-    function init() {
-      if (container) return // already initialised
-      container = document.getElementById('giscus-comments')
-      loadingIndicator = document.getElementById('giscus-loading')
-      if (!container) return
-      // Watch theme changes on <html>.
-      themeObserver.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme'],
-      })
-      loadGiscus()
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init)
-    } else {
-      init()
-    }
-
-    // View transitions: the giscus client persists, so just reload it for the
-    // new post. The mapping (pathname) is re-read from the updated location.
-    document.addEventListener('astro:page-load', function () {
-      isLoaded = false
-      if (loadingIndicator) {
-        loadingIndicator.style.display = 'flex'
-        loadingIndicator.innerHTML = '<span>Loading comments...</span>'
-      }
-      if (window.giscus) {
-        window.giscus.dispatchEvent(
-          new CustomEvent('reload', { detail: { reason: 'navigation' } }),
-        )
-        isLoaded = true
-        hideLoading()
-      } else {
-        setTimeout(init, 100)
-      }
+    })
+    bodyObserver.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
     })
   })()
 </script>
