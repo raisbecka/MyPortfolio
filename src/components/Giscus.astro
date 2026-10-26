@@ -10,14 +10,14 @@ const { title, url } = Astro.props
 const pageUrl = url || Astro.url.href
 
 // giscus is backed by GitHub Discussions on this repo.
-// Repo ID comes from the GraphQL `repository.id` field.
+// These values come from the giscus.app "Generate code" output.
 const repo = 'raisbecka/MyPortfolio'
 const repoId = 'R_kgDOOsRljw'
-// Must match a Discussion category name on the repo (Settings -> General -> Features -> Discussions).
 const category = 'Blog Comments'
-// Map each post to a discussion by its canonical URL (og:url). og:title is
-// emitted twice on post pages (Head + PostHead) so it is not a safe key here.
-const mapping = 'og:url'
+const categoryId = 'DIC_kwDOOsRlj84DJroM'
+// Map each post to a discussion by its URL path (e.g. /blog/opencode-v2/).
+const mapping = 'pathname'
+const inputPosition = 'bottom'
 const locale = SITE.locale.split('-')[0] || 'en'
 ---
 
@@ -41,14 +41,16 @@ const locale = SITE.locale.split('-')[0] || 'en'
     repo,
     repoId,
     category,
+    categoryId,
     mapping,
+    inputPosition,
     locale,
     pageUrl,
   }}
 >
   /**
    * giscus comments (backed by GitHub Discussions).
-   * - Lazy loaded via IntersectionObserver
+   * - giscus's own data-loading="lazy" defers the widget until scrolled into view
    * - Follows the site's light/dark theme via data-theme
    * - Reloads per-post on Astro view transitions
    *
@@ -61,9 +63,8 @@ const locale = SITE.locale.split('-')[0] || 'en'
     var container = null
     var loadingIndicator = null
     var isLoaded = false
-    var isLoading = false
 
-    // giscus theme values we use: light | dark
+    // giscus theme values we use: light | dark (matches the site's data-theme)
     function currentTheme() {
       return (
         document.documentElement.getAttribute('data-theme') === 'dark'
@@ -98,7 +99,7 @@ const locale = SITE.locale.split('-')[0] || 'en'
     })
 
     function loadGiscus() {
-      if (isLoading || isLoaded) return
+      if (isLoaded) return
       // If a giscus client already exists (view transition), just reload it.
       if (window.giscus) {
         isLoaded = true
@@ -109,7 +110,6 @@ const locale = SITE.locale.split('-')[0] || 'en'
         return
       }
 
-      isLoading = true
       var script = document.createElement('script')
       script.src = 'https://giscus.app/client.js'
       script.async = true
@@ -118,48 +118,26 @@ const locale = SITE.locale.split('-')[0] || 'en'
       script.setAttribute('data-repo', repo)
       script.setAttribute('data-repo-id', repoId)
       script.setAttribute('data-category', category)
+      script.setAttribute('data-category-id', categoryId)
       script.setAttribute('data-mapping', mapping)
       script.setAttribute('data-strict', '0')
       script.setAttribute('data-reactions-enabled', '1')
       script.setAttribute('data-emit-metadata', '0')
-      script.setAttribute('data-input-position', 'top')
-      script.setAttribute('data-focus-assist', '1')
+      script.setAttribute('data-input-position', inputPosition)
+      script.setAttribute('data-loading', 'lazy')
       script.setAttribute('data-theme', currentTheme())
       script.setAttribute('data-lang', locale)
 
       script.onerror = function () {
-        isLoading = false
         showError()
       }
       script.onload = function () {
         isLoaded = true
-        isLoading = false
         hideLoading()
         syncTheme()
       }
 
       ;(document.head || document.body).appendChild(script)
-    }
-
-    // Lazy load when scrolled into view.
-    function initObserver() {
-      if (!container) return
-      if (!('IntersectionObserver' in window)) {
-        loadGiscus()
-        return
-      }
-      var io = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting && !isLoaded && !isLoading) {
-              loadGiscus()
-              io.disconnect()
-            }
-          })
-        },
-        { rootMargin: '200px', threshold: 0.1 },
-      )
-      io.observe(container)
     }
 
     // Resolve DOM refs + start the observer. Must run after <body> exists.
@@ -173,7 +151,7 @@ const locale = SITE.locale.split('-')[0] || 'en'
         attributes: true,
         attributeFilter: ['data-theme'],
       })
-      initObserver()
+      loadGiscus()
     }
 
     if (document.readyState === 'loading') {
@@ -183,10 +161,9 @@ const locale = SITE.locale.split('-')[0] || 'en'
     }
 
     // View transitions: the giscus client persists, so just reload it for the
-    // new post. The mapping (og:url) is re-read from the updated <head>.
+    // new post. The mapping (pathname) is re-read from the updated location.
     document.addEventListener('astro:page-load', function () {
       isLoaded = false
-      isLoading = false
       if (loadingIndicator) {
         loadingIndicator.style.display = 'flex'
         loadingIndicator.innerHTML = '<span>Loading comments...</span>'
