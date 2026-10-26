@@ -51,14 +51,15 @@ const locale = SITE.locale.split('-')[0] || 'en'
    * - Lazy loaded via IntersectionObserver
    * - Follows the site's light/dark theme via data-theme
    * - Reloads per-post on Astro view transitions
+   *
+   * NOTE: Astro hoists is:inline scripts into <head>, so this runs BEFORE the
+   * <body> exists. All DOM lookups are therefore deferred to DOMContentLoaded.
    */
   ;(function () {
     'use strict'
 
-    var container = document.getElementById('giscus-comments')
-    var loadingIndicator = document.getElementById('giscus-loading')
-    if (!container) return
-
+    var container = null
+    var loadingIndicator = null
     var isLoaded = false
     var isLoading = false
 
@@ -92,7 +93,7 @@ const locale = SITE.locale.split('-')[0] || 'en'
       }
     }
 
-    var observer = new MutationObserver(function () {
+    var themeObserver = new MutationObserver(function () {
       if (isLoaded) syncTheme()
     })
 
@@ -142,6 +143,7 @@ const locale = SITE.locale.split('-')[0] || 'en'
 
     // Lazy load when scrolled into view.
     function initObserver() {
+      if (!container) return
       if (!('IntersectionObserver' in window)) {
         loadGiscus()
         return
@@ -160,16 +162,24 @@ const locale = SITE.locale.split('-')[0] || 'en'
       io.observe(container)
     }
 
-    // Watch theme changes on <html>.
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    })
+    // Resolve DOM refs + start the observer. Must run after <body> exists.
+    function init() {
+      if (container) return // already initialised
+      container = document.getElementById('giscus-comments')
+      loadingIndicator = document.getElementById('giscus-loading')
+      if (!container) return
+      // Watch theme changes on <html>.
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      })
+      initObserver()
+    }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initObserver)
+      document.addEventListener('DOMContentLoaded', init)
     } else {
-      initObserver()
+      init()
     }
 
     // View transitions: the giscus client persists, so just reload it for the
@@ -188,7 +198,7 @@ const locale = SITE.locale.split('-')[0] || 'en'
         isLoaded = true
         hideLoading()
       } else {
-        setTimeout(initObserver, 100)
+        setTimeout(init, 100)
       }
     })
   })()
