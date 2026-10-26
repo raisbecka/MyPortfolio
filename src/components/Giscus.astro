@@ -9,44 +9,46 @@ const pageUrl = url || Astro.url.href
 ---
 
 <section id="giscus-section" class="mt-12" aria-label="Comments section">
-  <!--
-    Standard giscus embed (config from giscus.app "Generate code").
-    giscus handles lazy loading (data-loading="lazy") and, with Astro's
-    ClientRouter, a fresh script element is injected per page, so each post
-    resolves its own discussion via the pathname mapping. No custom loader.
-  -->
-  <script
-    src="https://giscus.app/client.js"
-    data-repo="raisbecka/MyPortfolio"
-    data-repo-id="R_kgDOOsRljw"
-    data-category="Blog Comments"
-    data-category-id="DIC_kwDOOsRlj84DJroM"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="preferred_color_scheme"
-    data-lang="en"
-    data-loading="lazy"
-    crossorigin="anonymous"
-    async
-  ></script>
+  <div id="giscus-root"></div>
 </section>
 
 <script is:inline>
   /**
-   * Keep giscus in sync with the site's light/dark theme.
-   * giscus defaults to preferred_color_scheme (OS setting); the site has a
-   * manual toggle that sets <html data-theme>. We forward theme changes to
-   * the giscus iframe and sync once when the lazy-loaded iframe appears.
+   * giscus comments (backed by GitHub Discussions).
+   *
+   * Why a dynamic loader instead of the static <script> embed:
+   *  - The giscus client reads `document.currentScript` for its origin. On a
+   *    hard refresh that is set, but on Astro's client-side view transitions
+   *    the static script re-runs with document.currentScript === null, so
+   *    giscus throws before creating the iframe (comments never load until
+   *    you refresh). Injecting a fresh <script> we created ourselves always
+   *    has document.currentScript set.
+   *  - The iframe's theme is baked into its src URL at run time; there is no
+   *    runtime theme API. So we re-inject with an explicit light/dark theme
+   *    that tracks the site's <html data-theme> (preferred_color_scheme
+   *    follows the OS, which is wrong when the site theme differs).
    *
    * NOTE: Astro hoists is:inline scripts into <head>, so this runs before
-   * <body> exists. Only observer registration happens here (head-safe);
-   * everything else is deferred.
+   * <body> exists. All DOM work is deferred to DOMContentLoaded /
+   * astro:page-load.
    */
   ;(function () {
     'use strict'
+
+    var GISCUS_SRC = 'https://giscus.app/client.js'
+    var CONFIG = {
+      repo: 'raisbecka/MyPortfolio',
+      repoId: 'R_kgDOOsRljw',
+      category: 'Blog Comments',
+      categoryId: 'DIC_kwDOOsRlj84DJroM',
+      mapping: 'pathname',
+      strict: '0',
+      reactionsEnabled: '1',
+      emitMetadata: '0',
+      inputPosition: 'bottom',
+      lang: 'en',
+      loading: 'lazy',
+    }
 
     function siteTheme() {
       return (
@@ -56,37 +58,69 @@ const pageUrl = url || Astro.url.href
       )
     }
 
-    function syncTheme() {
-      if (window.giscus) {
-        window.giscus.dispatchEvent(
-          new CustomEvent('themechange', { detail: { theme: siteTheme() } }),
-        )
-      }
+    // Tracks what is currently rendered (path|theme) so we only re-inject
+    // when it actually changes. Prevents the double-render that happens on
+    // initial load (both DOMContentLoaded and astro:page-load fire).
+    var rendered = null
+
+    function renderKey() {
+      return location.pathname + '|' + siteTheme()
     }
 
-    // Re-sync whenever the site theme toggle changes <html data-theme>.
+    function renderGiscus() {
+      var root = document.getElementById('giscus-root')
+      if (!root) return
+      var key = renderKey()
+      if (rendered === key) return // already rendered for this path + theme
+      rendered = key
+      // Tear down any previous widget (old script + .giscus div + iframe).
+      root.innerHTML = ''
+
+      var s = document.createElement('script')
+      s.src = GISCUS_SRC
+      s.async = true
+      s.crossOrigin = 'anonymous'
+      s.setAttribute('data-repo', CONFIG.repo)
+      s.setAttribute('data-repo-id', CONFIG.repoId)
+      s.setAttribute('data-category', CONFIG.category)
+      s.setAttribute('data-category-id', CONFIG.categoryId)
+      s.setAttribute('data-mapping', CONFIG.mapping)
+      s.setAttribute('data-strict', CONFIG.strict)
+      s.setAttribute('data-reactions-enabled', CONFIG.reactionsEnabled)
+      s.setAttribute('data-emit-metadata', CONFIG.emitMetadata)
+      s.setAttribute('data-input-position', CONFIG.inputPosition)
+      s.setAttribute('data-lang', CONFIG.lang)
+      s.setAttribute('data-loading', CONFIG.loading)
+      // Explicit theme matching the site (light/dark), not preferred_color_scheme.
+      s.setAttribute('data-theme', siteTheme())
+      root.appendChild(s)
+    }
+
+    // Initial render.
+    function init() {
+      if (!document.getElementById('giscus-root')) return
+      renderGiscus()
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init)
+    } else {
+      init()
+    }
+
+    // Every client-side navigation to a new post: re-inject so the widget
+    // resolves the new post's discussion (pathname mapping) and always has
+    // document.currentScript set.
+    document.addEventListener('astro:page-load', function () {
+      renderGiscus()
+    })
+
+    // Theme toggle: re-inject with the new theme. (Re-injecting does not
+    // change <html data-theme>, so this does not loop.)
     new MutationObserver(function () {
-      syncTheme()
+      renderGiscus()
     }).observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme'],
-    })
-
-    // Sync once when the lazy-loaded giscus iframe appears in the DOM.
-    // Observe <html> (not <body>) because this runs before <body> exists.
-    var bodyObserver = new MutationObserver(function () {
-      var frame = document.querySelector('iframe.giscus-frame')
-      if (frame) {
-        syncTheme()
-        // The iframe's content window (window.giscus) may not be attached
-        // until the iframe finishes loading, so sync again on load.
-        frame.addEventListener('load', syncTheme)
-        bodyObserver.disconnect()
-      }
-    })
-    bodyObserver.observe(document.documentElement, {
-      childList: true,
-      subtree: true,
     })
   })()
 </script>
