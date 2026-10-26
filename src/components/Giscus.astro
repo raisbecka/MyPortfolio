@@ -137,7 +137,10 @@ const locale = SITE.locale.split('-')[0] || 'en'
         syncTheme()
       }
 
-      ;(document.head || document.body).appendChild(script)
+      // Append into the comments container (in <body>), not <head>: giscus
+      // inserts its iframe next to this script, so it must be in the visible
+      // DOM or it renders at 0x0 and is invisible.
+      ;(container || document.body).appendChild(script)
     }
 
     // Resolve DOM refs + start the observer. Must run after <body> exists.
