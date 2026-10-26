@@ -23,12 +23,9 @@ export const UMAMI = {
   websiteId: import.meta.env.PUBLIC_UMAMI_WEBSITE_ID || '',
 }
 
-// Disqus Comments
-// Get your shortname from https://disqus.com/admin/settings/general/
-// Set it as an environment variable: PUBLIC_DISQUS_SHORTNAME=your-shortname
-export const DISQUS = {
-  shortname: import.meta.env.PUBLIC_DISQUS_SHORTNAME || '',
-}
+// giscus Comments
+// Comments are backed by GitHub Discussions (see src/components/Giscus.astro).
+// Nothing to configure here; the repo/category are set in that component.
 
 // Brevo Newsletter
 // Get your API key from https://app.brevo.com/settings/keys/api

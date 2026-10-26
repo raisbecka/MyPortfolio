@@ -1,0 +1,213 @@
+---
+import { SITE } from '@/consts'
+
+interface Props {
+  title: string
+  url?: string
+}
+
+const { title, url } = Astro.props
+const pageUrl = url || Astro.url.href
+
+// giscus is backed by GitHub Discussions on this repo.
+// Repo ID comes from the GraphQL `repository.id` field.
+const repo = 'raisbecka/MyPortfolio'
+const repoId = 'R_kgDOOsRljw'
+// Must match a Discussion category name on the repo (Settings -> General -> Features -> Discussions).
+const category = 'Blog Comments'
+// Map each post to a discussion by its canonical URL (og:url). og:title is
+// emitted twice on post pages (Head + PostHead) so it is not a safe key here.
+const mapping = 'og:url'
+const locale = SITE.locale.split('-')[0] || 'en'
+---
+
+<section id="giscus-section" class="mt-12" aria-label="Comments section">
+  <div id="giscus-comments" class="min-h-[200px]"></div>
+
+  <!-- Loading indicator (hidden once giscus loads) -->
+  <div
+    id="giscus-loading"
+    class="text-muted-foreground flex items-center justify-center py-8 text-sm"
+    aria-live="polite"
+    aria-label="Loading comments"
+  >
+    <span>Loading comments...</span>
+  </div>
+</section>
+
+<script
+  is:inline
+  define:vars={{
+    repo,
+    repoId,
+    category,
+    mapping,
+    locale,
+    pageUrl,
+  }}
+>
+  /**
+   * giscus comments (backed by GitHub Discussions).
+   * - Lazy loaded via IntersectionObserver
+   * - Follows the site's light/dark theme via data-theme
+   * - Reloads per-post on Astro view transitions
+   */
+  ;(function () {
+    'use strict'
+
+    var container = document.getElementById('giscus-comments')
+    var loadingIndicator = document.getElementById('giscus-loading')
+    if (!container) return
+
+    var isLoaded = false
+    var isLoading = false
+
+    // giscus theme values we use: light | dark
+    function currentTheme() {
+      return (
+        document.documentElement.getAttribute('data-theme') === 'dark'
+          ? 'dark'
+          : 'light'
+      )
+    }
+
+    function hideLoading() {
+      if (loadingIndicator) loadingIndicator.style.display = 'none'
+    }
+
+    function showError() {
+      if (loadingIndicator) {
+        loadingIndicator.innerHTML =
+          '<span class="text-muted-foreground">Comments are unavailable right now. ' +
+          '<a href="https://giscus.app" class="underline">Why?</a></span>'
+        loadingIndicator.setAttribute('role', 'alert')
+      }
+    }
+
+    // Keep giscus in sync with the site theme.
+    function syncTheme() {
+      var scripts = document.querySelectorAll('script[data-giscus-client]')
+      for (var i = 0; i < scripts.length; i++) {
+        scripts[i].setAttribute('data-theme', currentTheme())
+      }
+    }
+
+    var observer = new MutationObserver(function () {
+      if (isLoaded) syncTheme()
+    })
+
+    function loadGiscus() {
+      if (isLoading || isLoaded) return
+      // If a giscus client already exists (view transition), just reload it.
+      if (window.giscus) {
+        isLoaded = true
+        hideLoading()
+        window.giscus.dispatchEvent(
+          new CustomEvent('reload', { detail: { reason: 'navigation' } }),
+        )
+        return
+      }
+
+      isLoading = true
+      var script = document.createElement('script')
+      script.src = 'https://giscus.app/client.js'
+      script.async = true
+      script.crossOrigin = 'anonymous'
+      script.setAttribute('data-giscus-client', 'true')
+      script.setAttribute('data-repo', repo)
+      script.setAttribute('data-repo-id', repoId)
+      script.setAttribute('data-category', category)
+      script.setAttribute('data-mapping', mapping)
+      script.setAttribute('data-strict', '0')
+      script.setAttribute('data-reactions-enabled', '1')
+      script.setAttribute('data-emit-metadata', '0')
+      script.setAttribute('data-input-position', 'top')
+      script.setAttribute('data-focus-assist', '1')
+      script.setAttribute('data-theme', currentTheme())
+      script.setAttribute('data-lang', locale)
+
+      script.onerror = function () {
+        isLoading = false
+        showError()
+      }
+      script.onload = function () {
+        isLoaded = true
+        isLoading = false
+        hideLoading()
+        syncTheme()
+      }
+
+      ;(document.head || document.body).appendChild(script)
+    }
+
+    // Lazy load when scrolled into view.
+    function initObserver() {
+      if (!('IntersectionObserver' in window)) {
+        loadGiscus()
+        return
+      }
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !isLoaded && !isLoading) {
+              loadGiscus()
+              io.disconnect()
+            }
+          })
+        },
+        { rootMargin: '200px', threshold: 0.1 },
+      )
+      io.observe(container)
+    }
+
+    // Watch theme changes on <html>.
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initObserver)
+    } else {
+      initObserver()
+    }
+
+    // View transitions: the giscus client persists, so just reload it for the
+    // new post. The mapping (og:url) is re-read from the updated <head>.
+    document.addEventListener('astro:page-load', function () {
+      isLoaded = false
+      isLoading = false
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'flex'
+        loadingIndicator.innerHTML = '<span>Loading comments...</span>'
+      }
+      if (window.giscus) {
+        window.giscus.dispatchEvent(
+          new CustomEvent('reload', { detail: { reason: 'navigation' } }),
+        )
+        isLoaded = true
+        hideLoading()
+      } else {
+        setTimeout(initObserver, 100)
+      }
+    })
+  })()
+</script>
+
+<noscript>
+  <div
+    class="bg-muted/50 text-muted-foreground mt-12 rounded-lg border p-6 text-center text-sm"
+  >
+    <p>
+      Please enable JavaScript to view the{' '}
+      <a
+        href={pageUrl}
+        class="hover:text-foreground underline"
+        rel="noopener noreferrer"
+      >
+        comments powered by giscus
+      </a>
+      .
+    </p>
+  </div>
+</noscript>

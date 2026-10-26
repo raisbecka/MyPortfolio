@@ -85,31 +85,30 @@ const siteUrl = SITE.href
         <strong>Data retention:</strong> Until you unsubscribe or request deletion
       </p>
 
-      <h3 class="mt-6 text-xl font-semibold">2. Comments (Disqus)</h3>
+      <h3 class="mt-6 text-xl font-semibold">2. Comments (giscus)</h3>
       <p>
-        When you leave a comment on our blog posts, we use <strong
-          >Disqus</strong
-        > as our commenting platform. Disqus may collect:
+        When you leave a comment on our blog posts, we use <strong>giscus</strong>,
+        an open-source commenting widget backed by GitHub Discussions. To post a
+        comment you sign in with GitHub, which may share:
       </p>
       <ul>
-        <li>Name and email address (if you create a Disqus account)</li>
-        <li>IP address</li>
-        <li>Browser information</li>
+        <li>Your GitHub username and public profile information (such as your avatar)</li>
         <li>Comment content</li>
+        <li>Browser information used to render the widget</li>
       </ul>
       <p>
-        Disqus is a third-party service with its own privacy policy. We
+        Comments are stored as GitHub Discussions on the repository that powers
+        this site. giscus is a third-party service with its own privacy policy. We
         recommend reviewing
         <a
-          href="https://help.disqus.com/en/articles/1717103-disqus-privacy-policy"
+          href="https://giscus.app"
           target="_blank"
           rel="noopener noreferrer"
-          class="underline">Disqus's Privacy Policy</a
-        >
-        to understand how they handle your data.
+          class="underline">giscus</a>
+        and GitHub's privacy policies to understand how your data is handled.
       </p>
       <p>
-        <strong>Legal basis:</strong> Your consent when using the Disqus service
+        <strong>Legal basis:</strong> Your consent when using the commenting service
       </p>
 
       <h3 class="mt-6 text-xl font-semibold">3. Advertising (Google Ads)</h3>
@@ -162,7 +161,7 @@ const siteUrl = SITE.href
       </p>
       <ul>
         <li>Advertising (Google Ads)</li>
-        <li>Comment functionality (Disqus)</li>
+        <li>Comment functionality (giscus)</li>
         <li>Website functionality and analytics</li>
       </ul>
       <p>
@@ -242,12 +241,7 @@ const siteUrl = SITE.href
           >
         </li>
         <li>
-          <strong>Disqus:</strong> Commenting platform - <a
-            href="https://help.disqus.com/en/articles/1717103-disqus-privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="underline">Privacy Policy</a
-          >
+          <strong>giscus:</strong> Commenting platform (GitHub Discussions)
         </li>
         <li>
           <strong>Google Ads:</strong> Advertising - <a
