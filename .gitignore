@@ -9,6 +9,8 @@ pnpm-debug.log*
 .env.production
 .DS_Store
 .idea/
+playwright-report/
+test-results/
 teaser.pptx
 ~$teaser.pptx
 

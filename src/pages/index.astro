@@ -128,33 +128,24 @@ const websiteSchema = {
 		<div
 			class="flex flex-wrap items-center gap-2 pt-2 pr-0 max-[530px]:(mt-[10px] ml-[20px]) min-[530px]:ml-[200px] sm:ml-[300px] lg:ml-[440px]"
 			>
-			<Link
-			href="/blog"
-			class={`${buttonVariants({ variant: 'default', size: 'lg' })} w-27`}
-			>
-			Articles
-			<Icon name="lucide:arrow-right" class="size-4" />
-			</Link>
-			<Link
-			href="/projects"
-			class={`${buttonVariants({ variant: 'outline', size: 'lg' })} w-27`}
-			>
-			Projects
-			</Link>
-			<div>
-				<Link
-				href="/about"
-				class={`${buttonVariants({ variant: 'outline', size: 'lg' })} w-27`}
-				>
-				Resume
-				</Link>
-				<Link
-				href="/about"
-				class={`${buttonVariants({ variant: 'outline', size: 'lg' })} w-27 ml-2`}
-				>
-				About me
-				</Link>
-			</div>
+      <Link
+        href="/about"
+        class={`${buttonVariants({ variant: 'default', size: 'lg' })} w-27`}
+      >
+        About me
+      </Link>
+      <Link
+        href="/projects"
+        class={`${buttonVariants({ variant: 'outline', size: 'lg' })} w-27`}
+      >
+        Projects
+      </Link>
+      <Link
+        href="/blog"
+        class={`${buttonVariants({ variant: 'outline', size: 'lg' })} w-27`}
+      >
+        Articles
+      </Link>
 		</div>
 		<!-- Social Icons -->
 		<div class="pt-2 pr-0 max-[530px]:(mt-[10px] ml-[20px]) min-[530px]:ml-[200px] sm:ml-[300px] lg:ml-[440px]">
