@@ -1,0 +1,131 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface ExperienceItem {
+  role: string
+  period: string
+  company: string
+  note?: string
+  bullets: string[]
+}
+
+interface ExperienceTrack {
+  id: string
+  label: string
+  summary: string
+  icon: string
+  items: ExperienceItem[]
+}
+
+const tracks: ExperienceTrack[] = [
+  {
+    id: 'maximo-experience',
+    label: 'IBM Maximo / MAS',
+    summary: 'Custom applications, asset management and systems integration',
+    icon: 'lucide:settings',
+    items: [
+      {
+        role: 'Acting Program Manager, Digital Environmental',
+        company: 'The Regional Municipality of York',
+        period: 'Sep 2025–Apr 2026',
+        note: 'Concurrent assignment alongside my specialist role',
+        bullets: [
+          'Led a small specialist team through a Maximo 7.6.x to Maximo Application Suite (MAS) 9.1 upgrade, a WebSphere to Red Hat OpenShift transition and a cloud migration in just over six months.',
+          'Integrated the cloud platform with on-premises legacy systems through Denodo middleware to maintain access to operational data.',
+        ],
+      },
+      {
+        role: 'Maximo Systems Specialist',
+        company: 'The Regional Municipality of York',
+        period: '2019–present',
+        bullets: [
+          'Built Operator Facility Logbook applications (eLogbook) from scratch in Java for EZMaxMobile and again in the React-based IBM Maximo Mobile framework for water and wastewater operations.',
+          'Developed custom ORO/OIC On-Call Scheduling applications and a self-serve Absence Request application and portal based on Maximo’s self-service Service Request application.',
+          'Extended Maximo’s Graphical Resource View to replace a custom Oracle APEX staff scheduling application and move scheduling into Maximo.',
+          'Achieved an 80–90% reduction in total time spent building and maintaining staff schedules through scheduling automation.',
+          'Delivered more than CAD $1.2 million in projected licensing savings over 10 years: analyzed LOGINTRACKING data for average concurrent users and application usage, optimized security groups and transitioned to IBM’s App Points licensing model.',
+          'Automated water sample result standardization across laboratories using a measurement unit conversion table, with anomaly detection and error reporting for invalid lab results to support consistent reporting and analysis.',
+          'Built on-premises integrations using SSIS ETLs and Maximo enterprise services with interface tables, including automatic synchronization of operator licensing status from OWWCO.',
+          'Used Denodo middleware and MAS object structure REST APIs to extract daily changes across Maximo tables into the on-premises data warehouse, preserving existing Power BI dashboards after the cloud migration.',
+          'Integrated PeopleSoft union seniority hours through Denodo data virtualization and REST APIs secured with Microsoft Entra OAuth 2.0 application authentication; MAS retrieves the data and updates labor records through an enterprise service.',
+          'Maintained bidirectional integration with York Region GIS servers to display assets and locations at their exact GPS coordinates in Maximo maps.',
+          'Set up a pilot using the Historian API to pull pump and other SCADA asset runtime hours into runtime meters on corresponding Maximo digital twin assets, supporting preventive and predictive maintenance.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'developer-experience',
+    label: 'Enterprise development',
+    summary: 'Java applications, delivery automation and reliability engineering',
+    icon: 'lucide:code',
+    items: [
+      {
+        role: 'Business Systems Specialist',
+        company: 'The Regional Municipality of York',
+        period: '2019–present',
+        bullets: [
+          'Developed eLogbook, a Java Struts/Spring web application extending EZMaxMobile, for water and wastewater operations staff working centrally and in the field.',
+          'Introduced Azure DevOps CI/CD pipelines that eliminated manual deployment errors and reduced deployment time from several hours to 30–40 minutes.',
+          'Implemented Prometheus and Grafana monitoring for WebSphere-hosted IBM Maximo and EZMaxMobile applications, tracking memory consumption, CPU usage spikes and average page-load time to detect instability early.',
+          'Developed and executed JUnit load tests simulating hundreds of authenticated EZMaxMobile users to reproduce failures associated with Java core dumps and application crashes.',
+          'Combined monitoring and load testing to identify and eliminate the source of recurring crashes, stabilize the applications and prevent the resulting user downtime.',
+        ],
+      },
+      {
+        role: 'Business Intelligence and Process Management Analyst',
+        company: 'The Regional Municipality of York',
+        period: '2017–2019',
+        bullets: [
+          'Developed public-facing digital services using Power Platform, IBM WebSphere and web technologies.',
+          'Handled documentation, development, stakeholder coordination, training and support throughout the application lifecycle.',
+        ],
+      },
+      {
+        role: 'Independent Consultant',
+        company: 'Selected clients, including Game Used Only and High Speed Hockey',
+        period: '2015–2025',
+        bullets: [
+          'Developed and maintained custom React web applications and Visual Basic desktop applications.',
+          'Used Cloudflare to secure domains, implement user authentication and improve time to first byte (TTFB) by more than 70%.',
+        ],
+      },
+    ],
+  },
+]
+---
+
+<div class="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
+  {
+    tracks.map((track) => (
+      <section
+        id={track.id}
+        aria-labelledby={`${track.id}-heading`}
+        class="border-border bg-muted/10 min-w-0 scroll-mt-24 rounded-xl border p-5 sm:p-6"
+      >
+        <div class="border-border mb-6 border-b pb-5">
+          <div class="mb-2 flex items-center gap-2.5">
+            <Icon name={track.icon} class="text-primary size-5 shrink-0" aria-hidden="true" />
+            <h3 id={`${track.id}-heading`} class="text-primary text-xl font-semibold">
+              {track.label}
+            </h3>
+          </div>
+          <p class="text-muted-foreground text-sm leading-relaxed">{track.summary}</p>
+        </div>
+        <div class="space-y-8">
+          {track.items.map((item) => (
+            <article>
+              <h4 class="text-base leading-snug font-semibold">{item.role}</h4>
+              <p class="text-muted-foreground mt-1 text-sm leading-relaxed">{item.company}</p>
+              <p class="text-muted-foreground mt-1 text-xs font-medium">{item.period}</p>
+              {item.note && <p class="text-muted-foreground mt-2 text-xs italic">{item.note}</p>}
+              <ul class="marker:text-primary mt-4 list-disc space-y-3 pl-4 text-sm leading-relaxed">
+                {item.bullets.map((bullet) => <li class="pl-1">{bullet}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

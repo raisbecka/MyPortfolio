@@ -3,7 +3,7 @@ import BlogCard from '@/components/BlogCard.astro'
 import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
 import { ErrorBoundary } from '@/components/react/ErrorBoundary'
-import ExperienceCarousel from '@/components/react/ExperienceCarousel'
+import Experience from '@/components/Experience.astro'
 import Skills from '@/components/react/Skills'
 import { buttonVariants } from '@/components/ui/button'
 import { ICON_MAP, SITE, SOCIAL_LINKS } from '@/consts'
@@ -181,15 +181,15 @@ const websiteSchema = {
     </div>
 </section>
 
-  <!-- Experience Carousel -->
-  <section class="mt-6">
+  <!-- Both experience tracks remain visible without JavaScript. -->
+  <section id="experience" class="mt-6 scroll-mt-24" aria-labelledby="experience-heading">
     <div class="mb-6">
-      <h2 class="mb-2 text-2xl font-semibold">Experience</h2>
+      <h2 id="experience-heading" class="mb-2 text-2xl font-semibold">Experience</h2>
       <p class="text-muted-foreground text-sm">
-        Professional journey and achievements
+        Two views of my overlapping work at York Region, alongside earlier roles and independent consulting.
       </p>
     </div>
-    <ExperienceCarousel client:load />
+    <Experience />
   </section>
 
   <!-- Skills & Technologies (Optional) -->
