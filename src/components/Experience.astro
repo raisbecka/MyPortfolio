@@ -57,7 +57,8 @@ const tracks: ExperienceTrack[] = [
   {
     id: 'developer-experience',
     label: 'Enterprise development',
-    summary: 'Java applications, delivery automation and reliability engineering',
+    summary:
+      'Java applications, delivery automation and reliability engineering',
     icon: 'lucide:code',
     items: [
       {
@@ -83,7 +84,8 @@ const tracks: ExperienceTrack[] = [
       },
       {
         role: 'Independent Consultant',
-        company: 'Selected clients, including Game Used Only and High Speed Hockey',
+        company:
+          'Selected clients, including Game Used Only and High Speed Hockey',
         period: '2015–2025',
         bullets: [
           'Developed and maintained custom React web applications and Visual Basic desktop applications.',
@@ -105,22 +107,41 @@ const tracks: ExperienceTrack[] = [
       >
         <div class="border-border mb-6 border-b pb-5">
           <div class="mb-2 flex items-center gap-2.5">
-            <Icon name={track.icon} class="text-primary size-5 shrink-0" aria-hidden="true" />
-            <h3 id={`${track.id}-heading`} class="text-primary text-xl font-semibold">
+            <Icon
+              name={track.icon}
+              class="text-primary size-5 shrink-0"
+              aria-hidden="true"
+            />
+            <h3
+              id={`${track.id}-heading`}
+              class="text-primary text-xl font-semibold"
+            >
               {track.label}
             </h3>
           </div>
-          <p class="text-muted-foreground text-sm leading-relaxed">{track.summary}</p>
+          <p class="text-muted-foreground text-sm leading-relaxed">
+            {track.summary}
+          </p>
         </div>
         <div class="space-y-8">
           {track.items.map((item) => (
             <article>
               <h4 class="text-base leading-snug font-semibold">{item.role}</h4>
-              <p class="text-muted-foreground mt-1 text-sm leading-relaxed">{item.company}</p>
-              <p class="text-muted-foreground mt-1 text-xs font-medium">{item.period}</p>
-              {item.note && <p class="text-muted-foreground mt-2 text-xs italic">{item.note}</p>}
+              <p class="text-muted-foreground mt-1 text-sm leading-relaxed">
+                {item.company}
+              </p>
+              <p class="text-muted-foreground mt-1 text-xs font-medium">
+                {item.period}
+              </p>
+              {item.note && (
+                <p class="text-muted-foreground mt-2 text-xs italic">
+                  {item.note}
+                </p>
+              )}
               <ul class="marker:text-primary mt-4 list-disc space-y-3 pl-4 text-sm leading-relaxed">
-                {item.bullets.map((bullet) => <li class="pl-1">{bullet}</li>)}
+                {item.bullets.map((bullet) => (
+                  <li class="pl-1">{bullet}</li>
+                ))}
               </ul>
             </article>
           ))}

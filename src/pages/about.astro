@@ -1,261 +1,158 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
-import { SITE } from '@/consts'
+import { buttonVariants } from '@/components/ui/button'
+import { SITE, SOCIAL_LINKS } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 
-// Person Schema for About page
+const email = SOCIAL_LINKS.find((link) => link.label === 'Email')
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: SITE.title,
+  name: 'Andrew Raisbeck',
   url: SITE.href,
-  description: SITE.description,
+  jobTitle: 'Enterprise developer and IBM Maximo/MAS specialist',
+  description:
+    'Enterprise application development, IBM Maximo/MAS, systems integration and application reliability for public-sector water and wastewater operations.',
 }
 ---
 
 <Layout class="max-w-3xl">
   <PageHead slot="head" title="About" />
-
-  <!-- Person Schema for About page SEO -->
-  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(personSchema)}
+  />
   <Breadcrumbs items={[{ label: 'About', icon: 'lucide:user' }]} />
 
-  <section class="flex flex-col gap-8">
-    <!-- Header -->
-    <div class="flex flex-col gap-4">
-      <div>
-        <h1 class="text-3xl font-bold md:text-4xl">About</h1>
-        <p class="text-muted-foreground mt-1 font-mono text-sm">
-          Learn more about Drewman
-        </p>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="prose prose-sm dark:prose-invert max-w-none space-y-6">
-      <div style="text-align: center">
-        <strong class="text-primary" style="font-size: x-large">Andrew Raisbeck's Portfolio Site</strong>
-      </div>
-      <p class="text-muted-foreground leading-relaxed"></p>
-      <br>
-      <div>
-        <img
-                src="/Lord_Poopin_Nommin.jpg"
-                alt="Lord Poopin' Nommin' (Epstein Choupenstein - aka Choupie)"
-                class="h-auto object-cover w-50 sm:w-[325px] lg:w-[440px]"
-                />
-      </div>
-        I'm a <div id="container" style="display: inline">Fullstack Developer</div> with 12+ years of experience working directly with 
-        clients - mostly in the Canadian Public sector. Working for the government means working within <i>tiiight</i> 
-        resource contraints - conditions that <del>encourage</del> **<strong>require</strong>**) creative thinking in order to 
-        succeed. I have had the opportunity to wear many hats, work on virtually all aspects of modern software development.
-        <br>
-        <br>
-        For the last 7 years, I have worked almost exclusively with IBM Maximo (now Maximo Application Suite). I am responsible for administration, support, development, 
-        system integrations... anything to do with Maximo. I have spoken at the Canadian Maximo User Group conference in 
-        Toronto on a few occasions, and I love any opportunity I can get to share what I've learned with those who are interested. 
-        <br>
-        <br>
-        I started this website to:<br>
-        <code>
-        - Showcase cool projects I have worked on<br>
-        - Blog about Maximo and other areas of interest (such as AI, automation, and finance)<br>
-        - Connect with others<br>
-        - Increase visibility with potential employers
-         </code>
-        <br>
-        <br>
-        When I'm <i>not</i> working, I enjoy weightlifting, running, programming (what did you expect - I'm a <strong>N.E.R.D</strong>), camping, 
-        and playing baseball.
-        <br>
-        <br>
-        If you'd like to connect about a job, about Maximo, or about literally anything else, hit me up! Send me an email.
-        <br>
-        <br>
-        - Andrew Raisbeck
-
-
+  <section aria-labelledby="about-heading" class="space-y-10 pb-8">
+    <header class="space-y-4">
+      <h1 id="about-heading" class="text-3xl font-bold md:text-4xl">
+        About me
+      </h1>
+      <p class="text-primary text-lg font-medium">Andrew Raisbeck</p>
+      <p class="text-lg leading-relaxed">
+        I’m an enterprise developer and IBM Maximo/MAS specialist. I build
+        applications and integrations for public-sector water and wastewater
+        operations, with a focus on making everyday work easier and keeping
+        essential systems reliable.
       </p>
+      <p class="text-muted-foreground leading-relaxed">
+        At York Region, I work across application development, platform
+        administration, support and systems integration. I work directly with
+        operations staff and other stakeholders to understand their
+        requirements, then carry that work through development, deployment,
+        training and ongoing support.
+      </p>
+    </header>
 
-    </div>
+    <section aria-labelledby="development-heading" class="space-y-4">
+      <h2 id="development-heading" class="text-xl font-semibold">
+        Application development and reliability
+      </h2>
+      <p class="text-muted-foreground leading-relaxed">
+        I developed eLogbook, a Java Struts/Spring extension to EZMaxMobile that
+        lets water and wastewater staff maintain facility logbooks both
+        centrally and in the field. I also rebuilt the logbook application using
+        IBM Maximo Mobile’s React-based framework. My independent consulting
+        work includes React web applications and Visual Basic desktop tools.
+      </p>
+      <p class="text-muted-foreground leading-relaxed">
+        Beyond application code, I introduced Azure DevOps CI/CD pipelines that
+        eliminated manual deployment errors and cut releases from several hours
+        to 30–40 minutes. I implemented Prometheus and Grafana monitoring for
+        Maximo and EZMaxMobile on WebSphere, and developed JUnit load tests that
+        simulated hundreds of authenticated users. Together, the monitoring and
+        load testing helped identify and eliminate the source of recurring Java
+        crashes and the downtime they caused.
+      </p>
+    </section>
+
+    <section aria-labelledby="maximo-heading" class="space-y-4">
+      <h2 id="maximo-heading" class="text-xl font-semibold">
+        Maximo applications, integrations and modernization
+      </h2>
+      <p class="text-muted-foreground leading-relaxed">
+        My Maximo work includes custom on-call scheduling and absence request
+        applications, extending Graphical Resource View to replace an Oracle
+        APEX scheduling system, and standardizing laboratory water sample
+        results with automated unit conversion, anomaly detection and error
+        reporting. Scheduling automation reduced the total time spent building
+        and maintaining staff schedules by 80–90%.
+      </p>
+      <p class="text-muted-foreground leading-relaxed">
+        I build integrations using Maximo enterprise services, SSIS, REST APIs
+        and Denodo middleware. These connect MAS with on-premises PeopleSoft
+        data and a data warehouse supporting Power BI dashboards. I also
+        maintain bidirectional GIS integration and have set up a Historian API
+        pilot to update Maximo asset runtime meters from SCADA data for
+        preventive and predictive maintenance.
+      </p>
+      <p class="text-muted-foreground leading-relaxed">
+        During a concurrent Acting Program Manager assignment, I led a small
+        specialist team through a Maximo 7.6.x to MAS 9.1 upgrade, a move from
+        WebSphere to Red Hat OpenShift and a cloud migration in just over six
+        months. Separately, my analysis of concurrent login and application
+        usage, security group optimization and transition to IBM App Points
+        produced more than CAD $1.2 million in projected licensing savings over
+        10 years.
+      </p>
+    </section>
+
+    <section aria-labelledby="approach-heading" class="space-y-4">
+      <h2 id="approach-heading" class="text-xl font-semibold">How I work</h2>
+      <p class="text-muted-foreground leading-relaxed">
+        Working in the public sector has taught me to make practical decisions
+        within limited budgets and existing infrastructure. I’m comfortable
+        working on established Java systems as well as newer React applications,
+        and I pay attention to what happens after a release: how staff use an
+        application, how it behaves under load and how the team will maintain
+        it.
+      </p>
+      <p class="text-muted-foreground leading-relaxed">
+        I’ve presented at the Canadian Maximo User Group in Toronto and enjoy
+        sharing what I learn. Outside work, I spend time on open-source tools,
+        AI and self-hosting projects. I also enjoy weightlifting, running,
+        camping and baseball.
+      </p>
+    </section>
+
+    <section
+      aria-labelledby="connect-heading"
+      class="border-border bg-muted/10 space-y-5 rounded-xl border p-5 sm:p-6"
+    >
+      <h2 id="connect-heading" class="text-xl font-semibold">Let’s talk</h2>
+      <p class="text-muted-foreground leading-relaxed">
+        I’m interested in developer and Maximo specialist roles where I can
+        build useful applications, solve integration problems and improve system
+        reliability.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <Link
+          href="/#maximo-experience"
+          class={buttonVariants({ variant: 'outline' })}
+        >
+          Maximo / MAS experience
+        </Link>
+        <Link
+          href="/#developer-experience"
+          class={buttonVariants({ variant: 'outline' })}
+        >
+          Development experience
+        </Link>
+        {
+          email && (
+            <Link
+              href={email.href}
+              class={buttonVariants({ variant: 'default' })}
+            >
+              Email me
+            </Link>
+          )
+        }
+      </div>
+    </section>
   </section>
-  <style>
-  /* ─── CONTAINER: defines the text style ─── */
-  #container {
-    font-family: 'Arial Black', 'Impact', 'Helvetica Neue', sans-serif;
-    font-weight: 900;
-    color: #fff;
-    display: inline-flex;   /* better inline behaviour */
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 0 4px;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 5px;
-    backdrop-filter: blur(2px);
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-  }
-  .letter {
-    display: inline-block;
-    font: inherit;
-    transform-origin: center bottom;
-    will-change: transform;
-    text-shadow: 0 0 20px currentColor, 0 0 60px currentColor, 0 0 100px currentColor;
-    opacity: 0.92;
-    padding: 0 0.01em;
-    line-height: 1.2;
-    transform: scale(1) !important;
-  }
-  .letter.space {
-    width: 0.45em;
-    padding: 0;
-    text-shadow: none !important;
-    opacity: 1 !important;
-    pointer-events: none;
-  }
-  @media (max-width: 600px) {
-    #container { padding: 16px 20px; }
-    .letter.space { width: 0.3em; }
-  }
-  @media (max-width: 400px) {
-    .letter.space { width: 0.25em; }
-  }
-</style>
-
-<!-- Astro: is:inline prevents bundling & ensures script runs as-is -->
-<script is:inline>
-  (() => {
-    'use strict';
-
-    const WAVE_DUR = 2.0;
-    const PAUSE_DUR = WAVE_DUR * 2;
-    const AMP = 0.55;
-    const SIGMA = 0.16;
-    const START = -0.45;
-    const END = 1.45;
-    const RAINBOW = ['#FF1A1A', '#FF8C00', '#FFD700', '#00E676', '#2979FF', '#7C4DFF', '#E040FB'];
-
-    const container = document.getElementById('container');
-    if (!container) return;
-
-    // Build letter spans
-    const rawText = container.textContent.trim();
-    const chars = rawText.split('');
-    container.innerHTML = '';
-    const frag = document.createDocumentFragment();
-    const letters = [];
-
-    chars.forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.className = 'letter';
-      if (ch === ' ') {
-        span.classList.add('space');
-        span.textContent = '\u00A0';
-      } else {
-        span.textContent = ch;
-        const color = RAINBOW[i % RAINBOW.length];
-        span.style.color = color;
-        span.dataset.color = color; // store for shadow
-      }
-      letters.push(span);
-      frag.appendChild(span);
-    });
-    container.appendChild(frag);
-
-    const N = letters.length;
-    if (N === 0) return;
-
-    // ─── ANIMATION STATE ──────────────────────────────────────
-    let phase = 'wave';
-    let waveTime = 0;
-    let pauseTime = 0;
-    let lastTimestamp = performance.now();
-
-    // ─── UPDATE WITH !important ──────────────────────────────
-    function update(center) {
-      for (let i = 0; i < N; i++) {
-        const el = letters[i];
-        if (el.classList.contains('space')) {
-          el.style.setProperty('transform', 'scale(1)', 'important');
-          el.style.setProperty('text-shadow', 'none', 'important');
-          continue;
-        }
-        const pos = (N > 1) ? (i / (N - 1)) : 0.5;
-        const d = pos - center;
-        const gauss = Math.exp(-(d * d) / (2 * SIGMA * SIGMA));
-        const s = 1 + AMP * gauss;
-        // Force transform with !important
-        el.style.setProperty('transform', `scale(${s})`, 'important');
-        // Force text-shadow with !important, using the letter's color
-        const color = el.dataset.color || '#ffffff';
-        const intensity = 0.5 + 0.5 * s;
-        const shadow = `
-          0 0 ${20 * intensity}px ${color},
-          0 0 ${60 * intensity}px ${color},
-          0 0 ${100 * intensity}px ${color}
-        `;
-        el.style.setProperty('text-shadow', shadow, 'important');
-        // also ensure display: inline-block so transform works
-        el.style.setProperty('display', 'inline-block', 'important');
-      }
-    }
-
-    function resetAll() {
-      for (let i = 0; i < N; i++) {
-        const el = letters[i];
-        el.style.setProperty('transform', 'scale(1)', 'important');
-        if (!el.classList.contains('space')) {
-          const color = el.dataset.color || '#ffffff';
-          el.style.setProperty(
-            'text-shadow',
-            `0 0 20px ${color}, 0 0 60px ${color}, 0 0 100px ${color}`,
-            'important'
-          );
-        } else {
-          el.style.setProperty('text-shadow', 'none', 'important');
-        }
-      }
-    }
-
-    // ─── ANIMATION LOOP ────────────────────────────────────────
-    function loop(timestamp) {
-      const now = performance.now();
-      const dt = Math.min((now - lastTimestamp) / 1000, 0.05);
-      lastTimestamp = now;
-
-      if (phase === 'wave') {
-        waveTime += dt;
-        if (waveTime >= WAVE_DUR) {
-          waveTime = WAVE_DUR;
-          phase = 'pause';
-          pauseTime = 0;
-          resetAll();
-        } else {
-          const prog = waveTime / WAVE_DUR;
-          const center = START + prog * (END - START);
-          update(center);
-        }
-      } else {
-        pauseTime += dt;
-        if (pauseTime >= PAUSE_DUR) {
-          phase = 'wave';
-          waveTime = 0;
-          update(START);
-        } else {
-          resetAll();
-        }
-      }
-
-      requestAnimationFrame(loop);
-    }
-
-    // ─── START ──────────────────────────────────────────────────
-    resetAll();
-    update(START);
-    requestAnimationFrame(loop);
-  })();
-</script>
 </Layout>
