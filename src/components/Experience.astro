@@ -26,30 +26,24 @@ const tracks: ExperienceTrack[] = [
     items: [
       {
         role: 'Acting Program Manager, Digital Environmental',
-        company: 'The Regional Municipality of York',
+        company: 'York Region',
         period: 'Sep 2025–Apr 2026',
         note: 'Concurrent assignment alongside my specialist role',
         bullets: [
-          'Led a small specialist team through a Maximo 7.6.x to Maximo Application Suite (MAS) 9.1 upgrade, a WebSphere to Red Hat OpenShift transition and a cloud migration in just over six months.',
-          'Integrated the cloud platform with on-premises legacy systems through Denodo middleware to maintain access to operational data.',
+          'Led a specialist team through a Maximo 7.6-to-MAS 9.1 upgrade, cloud migration and transition from WebSphere to Red Hat OpenShift in just over six months.',
+          'Connected the cloud platform to on-premises systems through Denodo middleware.',
         ],
       },
       {
         role: 'Maximo Systems Specialist',
-        company: 'The Regional Municipality of York',
+        company: 'York Region',
         period: '2019–present',
         bullets: [
-          'Built Operator Facility Logbook applications (eLogbook) from scratch in Java for EZMaxMobile and again in the React-based IBM Maximo Mobile framework for water and wastewater operations.',
-          'Developed custom ORO/OIC On-Call Scheduling applications and a self-serve Absence Request application and portal based on Maximo’s self-service Service Request application.',
-          'Extended Maximo’s Graphical Resource View to replace a custom Oracle APEX staff scheduling application and move scheduling into Maximo.',
-          'Achieved an 80–90% reduction in total time spent building and maintaining staff schedules through scheduling automation.',
-          'Delivered more than CAD $1.2 million in projected licensing savings over 10 years: analyzed LOGINTRACKING data for average concurrent users and application usage, optimized security groups and transitioned to IBM’s App Points licensing model.',
-          'Automated water sample result standardization across laboratories using a measurement unit conversion table, with anomaly detection and error reporting for invalid lab results to support consistent reporting and analysis.',
-          'Built on-premises integrations using SSIS ETLs and Maximo enterprise services with interface tables, including automatic synchronization of operator licensing status from OWWCO.',
-          'Used Denodo middleware and MAS object structure REST APIs to extract daily changes across Maximo tables into the on-premises data warehouse, preserving existing Power BI dashboards after the cloud migration.',
-          'Integrated PeopleSoft union seniority hours through Denodo data virtualization and REST APIs secured with Microsoft Entra OAuth 2.0 application authentication; MAS retrieves the data and updates labor records through an enterprise service.',
-          'Maintained bidirectional integration with York Region GIS servers to display assets and locations at their exact GPS coordinates in Maximo maps.',
-          'Set up a pilot using the Historian API to pull pump and other SCADA asset runtime hours into runtime meters on corresponding Maximo digital twin assets, supporting preventive and predictive maintenance.',
+          'Developed custom Maximo and mobile applications for facility logbooks, on-call scheduling and employee absence requests.',
+          'Maintained York Region’s complex water and wastewater location and asset hierarchies, and configured preventive maintenance, job plans, inspections and other core asset management functions.',
+          'Replaced an Oracle APEX scheduling system with Maximo and reduced the time spent building and maintaining staff schedules by 80–90%.',
+          'Analyzed user activity and application access, optimized security groups and transitioned to IBM App Points, achieving projected licensing savings exceeding CAD $1.2 million over ten years.',
+          'Integrated Maximo with HR, GIS, laboratory and reporting systems, including automated laboratory data validation and unit conversion.',
         ],
       },
     ],
@@ -63,23 +57,22 @@ const tracks: ExperienceTrack[] = [
     items: [
       {
         role: 'Business Systems Specialist',
-        company: 'The Regional Municipality of York',
+        company: 'York Region',
         period: '2019–present',
         bullets: [
-          'Developed eLogbook, a Java Struts/Spring web application extending EZMaxMobile, for water and wastewater operations staff working centrally and in the field.',
-          'Introduced Azure DevOps CI/CD pipelines that eliminated manual deployment errors and reduced deployment time from several hours to 30–40 minutes.',
-          'Implemented Prometheus and Grafana monitoring for WebSphere-hosted IBM Maximo and EZMaxMobile applications, tracking memory consumption, CPU usage spikes and average page-load time to detect instability early.',
-          'Developed and executed JUnit load tests simulating hundreds of authenticated EZMaxMobile users to reproduce failures associated with Java core dumps and application crashes.',
-          'Combined monitoring and load testing to identify and eliminate the source of recurring crashes, stabilize the applications and prevent the resulting user downtime.',
+          'Built eLogbook, a Java Struts/Spring extension to EZMaxMobile, for water and wastewater staff working centrally and in the field; later rebuilt it using Maximo Mobile’s React-based framework.',
+          'Introduced Azure DevOps CI/CD pipelines, eliminating manual deployment errors and reducing deployment time from several hours to 30–40 minutes.',
+          'Combined Prometheus/Grafana monitoring with JUnit load tests simulating hundreds of authenticated users to identify and eliminate recurring application crashes and associated downtime.',
         ],
       },
       {
         role: 'Business Intelligence and Process Management Analyst',
-        company: 'The Regional Municipality of York',
+        company: 'York Region',
         period: '2017–2019',
         bullets: [
-          'Developed public-facing digital services using Power Platform, IBM WebSphere and web technologies.',
-          'Handled documentation, development, stakeholder coordination, training and support throughout the application lifecycle.',
+          'Developed public-facing digital services for Public Health and Child Care Services using Microsoft SharePoint, Power Platform and IBM WebSphere.',
+          'Managed requirements, development, stakeholder coordination, documentation, training and support, including documenting and redesigning business processes where appropriate.',
+          'Onboarded the Housing department to Yardi Asset Management for desktop and mobile property management, preventive maintenance scheduling and inspection management.',
         ],
       },
       {
@@ -88,8 +81,8 @@ const tracks: ExperienceTrack[] = [
           'Selected clients, including Game Used Only and High Speed Hockey',
         period: '2015–2025',
         bullets: [
-          'Developed and maintained custom React web applications and Visual Basic desktop applications.',
-          'Used Cloudflare to secure domains, implement user authentication and improve time to first byte (TTFB) by more than 70%.',
+          'Built and maintained custom React web applications and Visual Basic desktop tools.',
+          'Implemented Cloudflare security and authentication, and reduced time to first byte by more than 70%.',
         ],
       },
     ],
@@ -97,56 +90,255 @@ const tracks: ExperienceTrack[] = [
 ]
 ---
 
-<div class="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
-  {
-    tracks.map((track) => (
-      <section
-        id={track.id}
-        aria-labelledby={`${track.id}-heading`}
-        class="border-border bg-muted/10 min-w-0 scroll-mt-24 rounded-xl border p-5 sm:p-6"
+<experience-carousel
+  class="block min-w-0"
+  role="group"
+  aria-roledescription="carousel"
+  aria-label="Professional experience"
+>
+  <div
+    class="mb-4 flex items-center justify-between gap-3"
+    data-experience-controls
+    hidden
+  >
+    <span
+      class="text-muted-foreground text-sm"
+      aria-live="polite"
+      data-experience-status>IBM Maximo / MAS · 1 of 2</span
+    >
+    <div class="flex gap-2">
+      <button
+        type="button"
+        data-experience-prev
+        aria-label="Previous experience"
+        class="border-border hover:bg-muted rounded-md border p-2"
       >
-        <div class="border-border mb-6 border-b pb-5">
-          <div class="mb-2 flex items-center gap-2.5">
-            <Icon
-              name={track.icon}
-              class="text-primary size-5 shrink-0"
-              aria-hidden="true"
-            />
-            <h3
-              id={`${track.id}-heading`}
-              class="text-primary text-xl font-semibold"
-            >
-              {track.label}
-            </h3>
+        <Icon name="lucide:chevron-left" class="size-5" aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        data-experience-next
+        aria-label="Next experience"
+        class="border-border hover:bg-muted rounded-md border p-2"
+      >
+        <Icon name="lucide:chevron-right" class="size-5" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+  <div
+    data-experience-viewport
+    class="experience-viewport grid auto-cols-[100%] grid-flow-col items-start overflow-x-auto overscroll-x-contain"
+    tabindex="0"
+    role="group"
+    aria-label="Experience slides; use left and right arrow keys to switch tracks"
+  >
+    {
+      tracks.map((track) => (
+        <section
+          id={track.id}
+          aria-labelledby={`${track.id}-heading`}
+          class="experience-slide border-border bg-muted/10 min-w-0 scroll-mt-24 rounded-xl border p-5 sm:p-6"
+        >
+          <div class="border-border mb-6 border-b pb-5">
+            <div class="mb-2 flex items-center gap-2.5">
+              <Icon
+                name={track.icon}
+                class="text-primary size-5 shrink-0"
+                aria-hidden="true"
+              />
+              <h3
+                id={`${track.id}-heading`}
+                class="text-primary text-xl font-semibold"
+              >
+                {track.label}
+              </h3>
+            </div>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              {track.summary}
+            </p>
           </div>
-          <p class="text-muted-foreground text-sm leading-relaxed">
-            {track.summary}
-          </p>
-        </div>
-        <div class="space-y-8">
-          {track.items.map((item) => (
-            <article>
-              <h4 class="text-base leading-snug font-semibold">{item.role}</h4>
-              <p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-                {item.company}
-              </p>
-              <p class="text-muted-foreground mt-1 text-xs font-medium">
-                {item.period}
-              </p>
-              {item.note && (
-                <p class="text-muted-foreground mt-2 text-xs italic">
-                  {item.note}
+          <div class="space-y-8">
+            {track.items.map((item) => (
+              <article>
+                <h4 class="text-base leading-snug font-semibold">
+                  {item.role}
+                </h4>
+                <p class="text-muted-foreground mt-1 text-sm leading-relaxed">
+                  {item.company}
                 </p>
-              )}
-              <ul class="marker:text-primary mt-4 list-disc space-y-3 pl-4 text-sm leading-relaxed">
-                {item.bullets.map((bullet) => (
-                  <li class="pl-1">{bullet}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
-    ))
+                <p class="text-muted-foreground mt-1 text-xs font-medium">
+                  {item.period}
+                </p>
+                {item.note && (
+                  <p class="text-muted-foreground mt-2 text-xs italic">
+                    {item.note}
+                  </p>
+                )}
+                <ul class="marker:text-primary mt-4 list-disc space-y-3 pl-4 text-sm leading-relaxed">
+                  {item.bullets.map((bullet) => (
+                    <li class="pl-1">{bullet}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+  <div class="mt-4 flex justify-center gap-2" data-experience-controls hidden>
+    {
+      tracks.map((track, index) => (
+        <button
+          type="button"
+          data-slide-index={index}
+          aria-label={`Show ${track.label} experience`}
+          aria-controls={track.id}
+          aria-current={index === 0 ? 'true' : 'false'}
+          class="experience-indicator flex h-8 w-8 items-center justify-center rounded-full"
+        >
+          <span
+            class="bg-border block h-2 w-2 rounded-full"
+            aria-hidden="true"
+          />
+        </button>
+      ))
+    }
+  </div>
+</experience-carousel>
+
+<style>
+  .experience-viewport {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overflow-y: hidden;
   }
-</div>
+  .experience-viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .experience-slide {
+    scroll-snap-align: start;
+  }
+  [data-experience-controls][hidden] {
+    display: none;
+  }
+  .experience-indicator[aria-current='true'] span {
+    background: var(--primary);
+    width: 1.5rem;
+  }
+</style>
+
+<script>
+  class ExperienceCarousel extends HTMLElement {
+    private cleanup?: () => void
+
+    connectedCallback() {
+      this.cleanup?.()
+      const viewport = this.querySelector<HTMLElement>(
+        '[data-experience-viewport]',
+      )
+      const slides = Array.from(
+        this.querySelectorAll<HTMLElement>('.experience-slide'),
+      )
+      if (!viewport || !slides.length) return
+      const controller = new AbortController()
+      const { signal } = controller
+      const indicators =
+        this.querySelectorAll<HTMLButtonElement>('[data-slide-index]')
+      const status = this.querySelector<HTMLElement>('[data-experience-status]')
+      let selected = 0
+
+      const select = (next: number, scroll = true) => {
+        selected = (next + slides.length) % slides.length
+        slides.forEach((slide, index) => {
+          const active = index === selected
+          slide.inert = !active
+          slide.setAttribute('aria-hidden', String(!active))
+        })
+        indicators.forEach((button, index) =>
+          button.setAttribute('aria-current', String(index === selected)),
+        )
+        if (status)
+          status.textContent = `${slides[selected].querySelector('h3')?.textContent?.trim()} · ${selected + 1} of ${slides.length}`
+        viewport.style.height = `${slides[selected].offsetHeight}px`
+        if (scroll)
+          viewport.scrollTo({
+            left: selected * viewport.clientWidth,
+            behavior: 'instant',
+          })
+      }
+      const selectHash = () => {
+        const index = slides.findIndex(
+          (slide) => `#${slide.id}` === window.location.hash,
+        )
+        if (index >= 0) select(index)
+      }
+      this.querySelector('[data-experience-prev]')?.addEventListener(
+        'click',
+        () => select(selected - 1),
+        { signal },
+      )
+      this.querySelector('[data-experience-next]')?.addEventListener(
+        'click',
+        () => select(selected + 1),
+        { signal },
+      )
+      indicators.forEach((button) =>
+        button.addEventListener(
+          'click',
+          () => select(Number(button.dataset.slideIndex)),
+          { signal },
+        ),
+      )
+      viewport.addEventListener(
+        'keydown',
+        (event) => {
+          const navigation: Record<string, number> = {
+            ArrowLeft: selected - 1,
+            ArrowRight: selected + 1,
+            Home: 0,
+            End: slides.length - 1,
+          }
+          const next = navigation[event.key]
+          if (next === undefined) return
+          event.preventDefault()
+          select(next)
+        },
+        { signal },
+      )
+      viewport.addEventListener(
+        'scroll',
+        () => {
+          if (!viewport.clientWidth) return
+          const index = Math.round(viewport.scrollLeft / viewport.clientWidth)
+          if (index !== selected && index >= 0 && index < slides.length)
+            select(index, false)
+        },
+        { signal, passive: true },
+      )
+      window.addEventListener('hashchange', selectHash, { signal })
+      const resize = new ResizeObserver(() => select(selected))
+      resize.observe(viewport)
+      slides.forEach((slide) => resize.observe(slide))
+      const initial = slides.findIndex(
+        (slide) => `#${slide.id}` === window.location.hash,
+      )
+      select(initial >= 0 ? initial : 0)
+      this.querySelectorAll<HTMLElement>('[data-experience-controls]').forEach(
+        (controls) => {
+          controls.hidden = false
+        },
+      )
+      this.cleanup = () => {
+        controller.abort()
+        resize.disconnect()
+      }
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.()
+    }
+  }
+  if (!customElements.get('experience-carousel'))
+    customElements.define('experience-carousel', ExperienceCarousel)
+</script>
