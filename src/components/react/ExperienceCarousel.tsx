@@ -54,8 +54,10 @@ const experiences: ExperienceCategory[] = [
         current: true,
         icon: 'lucide:briefcase',
         key: [
-          'Led a specialist team through a Maximo 7.6-to-MAS 9.1 upgrade, cloud migration and transition from WebSphere to Red Hat OpenShift in just over six months.',
-          'Connected the cloud platform to on-premises systems through Denodo middleware.',
+          'Led team during our Maximo 7.6-to-MAS 9.1 upgrade - including cloud migration and major infrastructure transition from WebSphere to Red Hat OpenShift in just over six months.',
+          'Conducted end-to-end review of all Maximo applications and integrations to ensure compatability with new version and infrastructure.',
+          'Redesigned developed all integrations with on-premise systems to work securely over public internet with Maximo Integration Framework and Denodo middleware.',
+          'Transitioned legacy customizations to the new "Customization Archive" format (built and deployed via Azure Devops pipelines).'
         ].join(' • '),
       },
       {
@@ -64,11 +66,10 @@ const experiences: ExperienceCategory[] = [
         period: '2019–present',
         icon: 'lucide:settings',
         key: [
-          'Developed custom Maximo and mobile applications for facility logbooks, on-call scheduling and employee absence requests.',
-          'Maintained York Region’s complex water and wastewater location and asset hierarchies, and configured preventive maintenance, job plans, inspections and other core asset management functions.',
-          'Replaced an Oracle APEX scheduling system with Maximo and reduced the time spent building and maintaining staff schedules by 80–90%.',
-          'Analyzed user activity and application access, optimized security groups and transitioned to IBM App Points, achieving projected licensing savings exceeding CAD $1.2 million over ten years.',
-          'Integrated Maximo with HR, GIS, laboratory and reporting systems, including automated laboratory data validation and unit conversion.',
+          'Developed complete Maximo applications for both desktop and mobile - including a regulatory operator logbook application and an automated scheduling system (which cut scheduling time by 80%+)',
+          'Setup and maintained all Maximo components - from core asset management (location & asset hierarchy, PMs, job plans, etc.) to administrative (automation scripts, data restrictions, object structures, etc.)',
+          'Optimized York Regions licensing - achieving projected cost savings exceeding CAD $1.2 million over ten years.',
+          'Integrated Maximo with many on-premise (HR, GIS, data warehousem and SCADA) as well as external (provincial licensing, laboratory FTP) systems.',
         ].join(' • '),
       },
     ],
