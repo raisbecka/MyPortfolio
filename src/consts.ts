@@ -81,9 +81,11 @@ export const ICON_MAP: IconMap = {
   RSS: 'lucide:rss',
 }
 
-// Newsletter consent text (centralized for GDPR compliance)
+// Newsletter consent text (centralized for CASL + GDPR compliance).
+// CASL requires the consent request to identify the sender and describe the
+// purpose for which consent is being sought.
 export const NEWSLETTER_CONSENT_TEXT = {
-  text: 'I agree to receive newsletter emails.',
+  text: 'I consent to receive emails from Andrew Raisbeck about new blog posts and occasional site updates. I can unsubscribe at any time using the link in any email.',
   privacyLink: '/privacy',
   privacyText: 'Privacy Policy',
 }

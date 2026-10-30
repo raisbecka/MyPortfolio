@@ -5,14 +5,13 @@ import { SITE, SOCIAL_LINKS } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
 
-// Get contact email from social links or use placeholder
+// Get contact email from social links
 const contactEmail =
   SOCIAL_LINKS.find((link) => link.label === 'Email')?.href.replace(
     'mailto:',
     '',
   ) || 'your@email.com'
 const siteName = SITE.title
-const siteUrl = SITE.href
 ---
 
 <Layout class="max-w-3xl">
@@ -29,7 +28,7 @@ const siteUrl = SITE.href
       </div>
       <p class="text-muted-foreground m-0 text-sm">
         Last updated: {
-          new Date().toLocaleDateString('en-US', {
+          new Date().toLocaleDateString('en-CA', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
@@ -39,201 +38,214 @@ const siteUrl = SITE.href
     </div>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Introduction</h2>
+      <h2 class="text-2xl font-semibold">About This Policy</h2>
       <p>
-        At {siteName}, we respect your privacy and are committed to protecting
-        your personal data. This privacy policy explains how we collect, use,
-        and safeguard your information when you visit our website.
+        My name is <strong>Andrew Raisbeck</strong> and {siteName}
+        (andrewraisbeck.com) is my personal portfolio and blog. This policy
+        explains what personal information I collect through this site, why I
+        collect it, how it is handled, and the choices you have.
+      </p>
+      <p>
+        I try to collect as little information as possible. I do not sell your
+        personal information, and I do not run third-party advertising or
+        analytics on this site. If that ever changes, I will update this page
+        and, where the law requires it, ask for your consent first.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Data Controller</h2>
-      <p>The data controller for this website is:</p>
-      <div class="bg-muted/30 rounded-lg border p-4">
-        <p class="m-0"><strong>{siteName}</strong></p>
-        <p class="text-muted-foreground m-0 text-sm">
-          Email: <a href={`mailto:${contactEmail}`} class="underline"
-            >{contactEmail}</a
-          >
-        </p>
-      </div>
+      <h2 class="text-2xl font-semibold">Consent</h2>
+      <p>
+        I am located in Ontario, Canada. This policy is written to meet my
+        obligations under Canada's <em>Personal Information Protection and
+        Electronic Documents Act</em> (PIPEDA) and — for emails I send —
+        Canada's <em>Anti-Spam Legislation</em> (CASL).
+      </p>
+      <ul>
+        <li>
+          <strong>Implied consent</strong> covers the routine, low-risk data
+          described below (for example, server request logs and your browser's
+          own storage of your theme preference). By using the site, you
+          reasonably expect this.
+        </li>
+        <li>
+          <strong>Express consent</strong> is required for my email newsletter.
+          You are only added to the newsletter if you deliberately check the
+          consent box in the sign-up form <em>and</em> confirm your
+          subscription by clicking the link in the confirmation email
+          (double opt-in). I keep a record of that confirmation as proof of
+          consent, as CASL requires.
+        </li>
+      </ul>
+      <p>
+        You can withdraw your consent at any time — for the newsletter by
+        unsubscribing (every email contains a working unsubscribe link), and
+        for anything else by contacting me. Withdrawing consent will not
+        affect the lawfulness of anything done before you withdrew it.
+      </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Information We Collect</h2>
+      <h2 class="text-2xl font-semibold">What I Collect, and Why</h2>
 
-      <h3 class="mt-6 text-xl font-semibold">
-        1. Newsletter Subscriptions (Brevo)
-      </h3>
-      <p>When you subscribe to our newsletter, we collect:</p>
+      <h3 class="mt-6 text-xl font-semibold">1. Newsletter (Brevo)</h3>
+      <p>When you subscribe to my newsletter, I collect:</p>
       <ul>
-        <li>Email address</li>
-        <li>Subscription date and time</li>
-        <li>IP address (for fraud prevention)</li>
+        <li>
+          <strong>Your email address</strong> — so I can send the newsletter
+        </li>
+        <li>
+          <strong>Subscription metadata</strong> — for example, when you
+          subscribed and your current subscription status
+        </li>
+        <li>
+          <strong>Proof of consent</strong> — Brevo's double opt-in process
+          records the date, time, and originating IP address of your
+          confirmation click, so I can demonstrate that valid consent existed
+        </li>
       </ul>
       <p>
-        We use <strong>Brevo</strong> (formerly Sendinblue) to manage our newsletter
-        subscriptions. Your email address is stored securely on Brevo's servers. You
-        can unsubscribe at any time by clicking the unsubscribe link in any newsletter
-        email or by contacting us directly.
+        I use <strong>Brevo</strong> (formerly Sendinblue) to store subscriber
+        emails and send the newsletter. Brevo processes this information on my
+        behalf as my service provider; see Brevo's
+        <a
+          href="https://www.brevo.com/legal/privacypolicy/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline">Privacy Policy</a
+        > for details.
       </p>
       <p>
-        <strong>Legal basis:</strong> Your explicit consent (GDPR Article 6(1)(a))
-      </p>
-      <p>
-        <strong>Data retention:</strong> Until you unsubscribe or request deletion
+        <strong>Legal basis:</strong> your express consent (CASL; PIPEDA
+        consent requirement)<br />
+        <strong>Retention:</strong> until you unsubscribe or ask me to delete
+        it. If you unsubscribe, I keep a minimal suppression record (your email
+        address marked unsubscribed) so you are not accidentally re-added.
       </p>
 
-      <h3 class="mt-6 text-xl font-semibold">2. Comments (giscus)</h3>
+      <h3 class="mt-6 text-xl font-semibold">2. Comments (giscus / GitHub)</h3>
       <p>
-        When you leave a comment on our blog posts, we use <strong>giscus</strong>,
-        an open-source commenting widget backed by GitHub Discussions. To post a
-        comment you sign in with GitHub, which may share:
+        Comments on my blog posts use <strong>giscus</strong>, an open-source
+        commenting widget backed by <strong>GitHub Discussions</strong>. If you
+        leave a comment, you sign in with your GitHub account and the comment
+        is stored publicly in the GitHub repository that powers this site.
+        Specifically:
       </p>
       <ul>
-        <li>Your GitHub username and public profile information (such as your avatar)</li>
-        <li>Comment content</li>
-        <li>Browser information used to render the widget</li>
+        <li>
+          Your GitHub username, avatar, and any public profile information
+          GitHub shares with the widget
+        </li>
+        <li>The content of your comment and its timestamps</li>
       </ul>
       <p>
-        Comments are stored as GitHub Discussions on the repository that powers
-        this site. giscus is a third-party service with its own privacy policy. We
-        recommend reviewing
+        This data is processed by
         <a
           href="https://giscus.app"
           target="_blank"
           rel="noopener noreferrer"
-          class="underline">giscus</a>
-        and GitHub's privacy policies to understand how your data is handled.
-      </p>
-      <p>
-        <strong>Legal basis:</strong> Your consent when using the commenting service
-      </p>
-
-      <h3 class="mt-6 text-xl font-semibold">3. Advertising (Google Ads)</h3>
-      <p>
-        We use <strong>Google Ads</strong> to display advertisements on our website.
-        Google may use cookies and similar technologies to:
-      </p>
-      <ul>
-        <li>Show personalized ads based on your interests</li>
-        <li>Measure ad performance</li>
-        <li>Conduct audience research</li>
-      </ul>
-      <p>
-        Google Ads uses the Transparency & Consent Framework (TCF) v2.2. When
-        you visit our site, you'll be asked for consent to use your personal
-        data for advertising purposes. You can manage or withdraw your consent
-        at any time through the cookie consent banner or privacy settings.
-      </p>
-      <p>
-        Your personal data may be processed and shared with up to 141 TCF
-        vendors and 69 ad partners as part of the advertising ecosystem.
-      </p>
-      <p>
-        For more information, please review
-        <a
-          href="https://policies.google.com/privacy"
+          class="underline">giscus</a
+        > and <a
+          href="https://docs.github.com/en/site-policy/github-privacy-statement"
           target="_blank"
           rel="noopener noreferrer"
-          class="underline">Google's Privacy Policy</a
-        >.
+          class="underline">GitHub</a
+        > under their own privacy policies, and remains subject to GitHub's
+        terms since it lives in a GitHub repository. Participating in comments
+        is entirely optional.
       </p>
       <p>
-        <strong>Legal basis:</strong> Your explicit consent (GDPR Article 6(1)(a))
+        <strong>Legal basis:</strong> your consent when you choose to comment<br />
+        <strong>Retention:</strong> for as long as you keep the comment posted
+        on GitHub; delete your comment (or ask me to) to remove it
       </p>
 
-      <h3 class="mt-6 text-xl font-semibold">4. Analytics</h3>
+      <h3 class="mt-6 text-xl font-semibold">3. Hosting and Security (Cloudflare)</h3>
       <p>
-        We may use analytics services to understand how visitors interact with
-        our website. This helps us improve our content and user experience.
-        Analytics data is typically anonymized and aggregated.
+        This site is hosted on <strong>Cloudflare Pages</strong>. Like virtually
+        all web hosts, Cloudflare processes standard request metadata — for
+        example your IP address, browser user-agent, and the time of your
+        request — to deliver the site, protect it from abuse and attacks, and
+        keep it working. I do not use this data to profile individuals.
+      </p>
+      <p>
+        <strong>Legal basis:</strong> my legitimate interest in operating and
+        securing the site (implied consent)<br />
+        <strong>Retention:</strong> handled by Cloudflare under its
+        <a
+          href="https://www.cloudflare.com/privacypolicy/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline">Privacy Policy</a
+        >, using short retention periods
+      </p>
+
+      <h3 class="mt-6 text-xl font-semibold">4. Data Stored in Your Browser</h3>
+      <p>
+        When you toggle the light/dark theme switch, your choice is saved in
+        your browser's <code>localStorage</code> so the theme persists between
+        visits. This stays entirely on your device; I never receive it.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Cookies</h2>
+      <h2 class="text-2xl font-semibold">Optional Features (Currently Disabled)</h2>
       <p>
-        Our website uses cookies and similar tracking technologies. Cookies are
-        small text files placed on your device when you visit our website. We
-        use cookies for:
-      </p>
-      <ul>
-        <li>Advertising (Google Ads)</li>
-        <li>Comment functionality (giscus)</li>
-        <li>Website functionality and analytics</li>
-      </ul>
-      <p>
-        You can control cookies through your browser settings. However,
-        disabling cookies may affect your ability to use certain features of our
-        website.
-      </p>
-    </section>
-
-    <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Your Rights (GDPR)</h2>
-      <p>
-        Under the General Data Protection Regulation (GDPR), you have the
-        following rights:
+        The following third-party features exist in the site's code but are
+        <strong>not currently active</strong>. If I enable any of them, I will
+        update this page first and, where required, obtain your consent:
       </p>
       <ul>
         <li>
-          <strong>Right to access:</strong> You can request a copy of the personal
-          data we hold about you
+          <strong>Analytics</strong> — optional Google Analytics or Umami
+          analytics could measure aggregate traffic. Neither is enabled.
         </li>
         <li>
-          <strong>Right to rectification:</strong> You can request correction of inaccurate
-          data
-        </li>
-        <li>
-          <strong>Right to erasure:</strong> You can request deletion of your personal
-          data
-        </li>
-        <li>
-          <strong>Right to restrict processing:</strong> You can request limitation
-          of how we process your data
-        </li>
-        <li>
-          <strong>Right to data portability:</strong> You can request your data in
-          a structured format
-        </li>
-        <li>
-          <strong>Right to object:</strong> You can object to processing of your personal
-          data
-        </li>
-        <li>
-          <strong>Right to withdraw consent:</strong> You can withdraw consent at
-          any time
+          <strong>Advertising</strong> — an optional Google AdSense integration
+          could display ads. It is not enabled. If I ever enable personalized
+          ads, I will present appropriate consent controls before those cookies
+          are set, as Google's requirements and applicable privacy law demand.
         </li>
       </ul>
-      <p>
-        To exercise any of these rights, please contact us at <a
-          href={`mailto:${contactEmail}`}
-          class="underline">{contactEmail}</a
-        >.
-      </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Data Security</h2>
+      <h2 class="text-2xl font-semibold">Cookies and Similar Technologies</h2>
       <p>
-        We implement appropriate technical and organizational measures to
-        protect your personal data against unauthorized access, alteration,
-        disclosure, or destruction. However, no method of transmission over the
-        Internet is 100% secure.
-      </p>
-    </section>
-
-    <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Third-Party Services</h2>
-      <p>
-        We use the following third-party services that may process your personal
-        data:
+        This site sets <strong>no first-party tracking cookies</strong>. In
+        summary:
       </p>
       <ul>
         <li>
-          <strong>Brevo:</strong> Newsletter management - <a
+          <strong>Strictly necessary / local:</strong> theme preference saved
+          in your browser's localStorage (your device only)
+        </li>
+        <li>
+          <strong>Comment widget:</strong> the giscus iframe and GitHub may use
+          cookies or similar technologies to operate the comments feature
+        </li>
+        <li>
+          <strong>Hosting:</strong> Cloudflare may use strictly necessary
+          cookies or headers to serve and secure the site
+        </li>
+        <li>
+          <strong>Advertising / analytics cookies:</strong> none, while these
+          features are disabled
+        </li>
+      </ul>
+      <p>
+        You can clear or block cookies and site data through your browser
+        settings at any time.
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">Who I Share Information With</h2>
+      <p>I do not sell, rent, or trade your personal information. I share it only with these service providers, strictly as needed to run the site:</p>
+      <ul>
+        <li>
+          <strong>Brevo</strong> — newsletter delivery and subscriber storage —
+          <a
             href="https://www.brevo.com/legal/privacypolicy/"
             target="_blank"
             rel="noopener noreferrer"
@@ -241,51 +253,144 @@ const siteUrl = SITE.href
           >
         </li>
         <li>
-          <strong>giscus:</strong> Commenting platform (GitHub Discussions)
+          <strong>GitHub</strong> — comment storage (Discussions) — <a
+            href="https://docs.github.com/en/site-policy/github-privacy-statement"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">Privacy Statement</a
+          >
         </li>
         <li>
-          <strong>Google Ads:</strong> Advertising - <a
-            href="https://policies.google.com/privacy"
+          <strong>Cloudflare</strong> — web hosting, content delivery, and
+          security — <a
+            href="https://www.cloudflare.com/privacypolicy/"
             target="_blank"
             rel="noopener noreferrer"
             class="underline">Privacy Policy</a
           >
         </li>
       </ul>
+      <p>
+        I may also disclose information where required by law (for example, a
+        court order or valid legal process).
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">Your Rights (Canada)</h2>
+      <p>Under PIPEDA and provincial privacy law, you have the right to:</p>
+      <ul>
+        <li>
+          <strong>Access</strong> the personal information I hold about you
+          (within 30 days of your request, as PIPEDA requires)
+        </li>
+        <li><strong>Correct</strong> inaccurate information</li>
+        <li>
+          <strong>Withdraw consent</strong> (for example, unsubscribe from the
+          newsletter) and expect it to take effect promptly — CASL requires
+          unsubscribe requests to be honoured within <strong>10 business
+          days</strong>
+        </li>
+        <li>
+          <strong>Complain</strong> about how I handle your information; please
+          contact me first and I will respond. You may also contact the
+          <a
+            href="https://www.priv.gc.ca/en/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">Office of the Privacy Commissioner of Canada</a
+          >, or — for spam concerns — the
+          <a
+            href="https://crtc.gc.ca/eng/com500/faq500.htm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">CRTC</a
+          >
+        </li>
+      </ul>
+      <p>
+        If you are visiting from the European Economic Area or the United
+        Kingdom: where optional features that would affect you are enabled, you
+        have corresponding rights under the GDPR (access, rectification,
+        erasure, restriction, portability, objection, and the right to withdraw
+        consent). Contact me any time to exercise these rights.
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">About the Newsletter Emails</h2>
+      <p>
+        What subscribers receive: emails referencing new blog posts and,
+        occasionally, notable updates to the site — nothing else. Every email:
+      </p>
+      <ul>
+        <li>Identifies me as the sender (name, with my contact details)</li>
+        <li>Explains why you are receiving it</li>
+        <li>
+          Includes a working unsubscribe link, honoured within 10 business days
+          as CASL requires
+        </li>
+      </ul>
+      <p>
+        If you believe you received a commercial email from me without consent,
+        please contact me directly — or use the unsubscribe link — and I will
+        sort it out promptly.
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">How Your Information Is Protected</h2>
+      <p>
+        I protect personal information with security measures appropriate to
+        its sensitivity: the site is served over HTTPS, the subscription
+        endpoint validates input and stores nothing locally, and no personally
+        identifying records are kept on the site itself — subscriber data lives
+        with Brevo, comments live with GitHub. No method of transmission over
+        the Internet is 100% secure, so I cannot promise absolute security, but
+        I will notify affected individuals and the Privacy Commissioner of
+        Canada of any privacy breach involving sensitive information, as
+        required by law.
+      </p>
     </section>
 
     <section class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Children's Privacy</h2>
       <p>
-        Our website is not intended for children under 16 years of age. We do
-        not knowingly collect personal data from children. If you believe we
-        have collected data from a child, please contact us immediately.
+        This site is a professional portfolio and blog, and is not directed at
+        children. I do not knowingly collect personal information from anyone
+        under 13 (and do not knowingly seek newsletter sign-ups under 16). If
+        you believe a child has provided personal information, contact me and
+        I will delete it.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Changes to This Policy</h2>
       <p>
-        We may update this privacy policy from time to time. We will notify you
-        of any changes by posting the new policy on this page and updating the
-        "Last updated" date.
+        I may update this policy from time to time — for example, if I enable
+        analytics or advertising, or change newsletter providers. The version
+        posted here with its "Last updated" date is always the current one.
+        Material changes affecting previously collected, consented-to
+        information (such as the newsletter list) may also be announced in the
+        newsletter itself.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Contact Us</h2>
+      <h2 class="text-2xl font-semibold">Contact Me</h2>
       <p>
-        If you have any questions about this privacy policy or wish to exercise
-        your rights, please contact us:
+        Questions, access requests, corrections, or complaints: I am the
+        person accountable for personal information on this site.
       </p>
       <div class="bg-muted/30 rounded-lg border p-4">
         <p class="m-0">
+          <strong>Andrew Raisbeck</strong><br />
           <strong>Email:</strong>
           <a href={`mailto:${contactEmail}`} class="underline">{contactEmail}</a
           >
         </p>
         <p class="text-muted-foreground m-0 mt-2 text-sm">
-          We aim to respond to all inquiries within 30 days.
+          I aim to respond within 30 days, as PIPEDA requires.
         </p>
       </div>
     </section>

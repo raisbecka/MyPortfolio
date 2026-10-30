@@ -5,31 +5,30 @@ import { SITE, SOCIAL_LINKS } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
 
-// Get contact email from social links or use placeholder
+// Get contact email from social links
 const contactEmail =
   SOCIAL_LINKS.find((link) => link.label === 'Email')?.href.replace(
     'mailto:',
     '',
   ) || 'your@email.com'
 const siteName = SITE.title
-const siteUrl = SITE.href
 ---
 
 <Layout class="max-w-3xl">
-  <PageHead slot="head" title="Terms & Conditions" />
+  <PageHead slot="head" title="Terms of Service" />
   <Breadcrumbs
-    items={[{ label: 'Terms & Conditions', icon: 'lucide:file-text' }]}
+    items={[{ label: 'Terms of Service', icon: 'lucide:file-text' }]}
   />
 
   <article class="prose prose-neutral dark:prose-invert max-w-none">
     <div class="bg-card/50 mb-6 rounded-lg border p-6">
       <div class="mb-2 flex items-center gap-3">
         <Icon name="lucide:file-text" class="text-primary size-6" />
-        <h1 class="m-0 text-3xl font-bold">Terms & Conditions</h1>
+        <h1 class="m-0 text-3xl font-bold">Terms of Service</h1>
       </div>
       <p class="text-muted-foreground m-0 text-sm">
         Last updated: {
-          new Date().toLocaleDateString('en-US', {
+          new Date().toLocaleDateString('en-CA', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
@@ -41,151 +40,272 @@ const siteUrl = SITE.href
     <section class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Acceptance of Terms</h2>
       <p>
-        By accessing and using {siteName}, you accept and agree to be bound by
-        these Terms & Conditions. If you do not agree with any part of these
-        terms, you must not use our website.
+        By accessing or using {siteName} (andrewraisbeck.com, "the site"), you
+        agree to these Terms of Service. If you do not agree with any part of
+        these terms, please stop using the site. These terms are written in
+        plain English and interpreted under Canadian law; see
+        <a href="#governing-law" class="underline">Governing Law</a> below.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Use of Website</h2>
-      <p>You may use our website for lawful purposes only. You agree not to:</p>
-      <ul>
-        <li>
-          Use the website in any way that violates applicable laws or
-          regulations
-        </li>
-        <li>Attempt to gain unauthorized access to any part of the website</li>
-        <li>Transmit any malicious code, viruses, or harmful data</li>
-        <li>Interfere with or disrupt the website's operation</li>
-        <li>
-          Use automated systems to scrape or collect data without permission
-        </li>
-      </ul>
+      <h2 class="text-2xl font-semibold">About This Site</h2>
+      <p>
+        {siteName} is my personal portfolio and blog, written and maintained by
+        me, Andrew Raisbeck, as an individual. Everything here reflects my own
+        opinions and experience. This is not a business website, and nothing on
+        it (including the newsletter) is an offer or solicitation.
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">Informational Use Only — Not Professional Advice</h2>
+      <p>
+        Content about software development, IBM Maximo, enterprise systems, or
+        technology generally is provided for general information and educational
+        purposes. It is not professional, engineering, legal, security, or
+        consulting advice, and should not be relied upon as such. Technology
+        changes quickly: content may become out of date, and I make no promise
+        to keep it current. Before acting on anything you read here, verify it
+        against official documentation and, where relevant, your own testing.
+      </p>
     </section>
 
     <section class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Intellectual Property</h2>
       <p>
-        All content on this website, including but not limited to text,
-        graphics, logos, images, and software, is the property of {siteName} or its
-        content suppliers and is protected by copyright and other intellectual property
-        laws.
+        Unless otherwise noted, all content on this site — articles, projects,
+        images, and code samples — is copyright © Andrew Raisbeck. All rights
+        reserved.
       </p>
       <p>You may:</p>
       <ul>
-        <li>Read and view content for personal, non-commercial use</li>
-        <li>Share links to our articles</li>
-        <li>Quote brief excerpts with proper attribution</li>
+        <li>Read, view, and print content for personal, non-commercial use</li>
+        <li>Share links to articles (that is always encouraged!)</li>
+        <li>
+          Quote brief excerpts with clear attribution and a link back to the
+          original page
+        </li>
       </ul>
       <p>You may not:</p>
       <ul>
-        <li>Reproduce, distribute, or republish content without permission</li>
-        <li>Use content for commercial purposes without authorization</li>
-        <li>Remove copyright notices or attribution</li>
+        <li>
+          Republish, redistribute, or create derivative versions of substantial
+          portions of the content without my written permission
+        </li>
+        <li>
+          Use the content commercially (for example, in training materials you
+          sell) without authorization
+        </li>
+        <li>Remove attribution when quoting</li>
+      </ul>
+      <p>
+        Note: "IBM Maximo" and other product names mentioned on this site are
+        trademarks of their respective owners. My mention of them, and my
+        profile as an IBM Maximo specialist, does not imply affiliation with,
+        sponsorship, or endorsement by IBM or any other company.
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">Acceptable Use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>Use the site in violation of applicable laws or regulations</li>
+        <li>
+          Attempt to gain unauthorized access to the site, its hosting
+          infrastructure, or related accounts
+        </li>
+        <li>Vulnerability-test or load-test the site without my prior written permission</li>
+        <li>Transmit malicious code, or interfere with the site's operation</li>
+        <li>
+          Use automated tools to scrape or bulk-collect content or data from
+          the site without permission (normal personal browsing, RSS readers,
+          and search engine crawling by major search engines are fine)
+        </li>
       </ul>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">User-Generated Content</h2>
-      <p>When you post comments or other content on our website:</p>
+      <h2 class="text-2xl font-semibold">Comments and User Contributions</h2>
+      <p>
+        Comments are powered by <strong>giscus</strong>, which stores them in
+        GitHub Discussions in the public repository behind this site. When you
+        post a comment on this site:
+      </p>
       <ul>
-        <li>You retain ownership of your content</li>
+        <li>You retain ownership of what you write</li>
         <li>
-          You grant us a license to use, display, and distribute your content on
-          our website
+          You grant me and other site visitors permission to view, display,
+          and interact with your comment as part of the site — and you accept
+          that GitHub also hosts and processes it under
+          <a
+            href="https://docs.github.com/en/site-policy/github-terms-of-service"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">GitHub's own terms</a
+          >, which also bind your GitHub account
         </li>
         <li>
-          You are responsible for ensuring your content does not violate any
-          laws or third-party rights
+          You are responsible for your comment being lawful and not
+          defamatory, harassing, hateful, spammy, or infringing anyone else's
+          rights
         </li>
-        <li>You agree not to post offensive, defamatory, or illegal content</li>
+        <li>
+          You consent to a reasonably foreseeable search of the public
+          repository storing your comment (comments are public)
+        </li>
       </ul>
       <p>
-        We reserve the right to remove any content that violates these terms or
-        is otherwise inappropriate, without prior notice.
+        My comments are only active on posts where the discussion is enabled. I
+        may report, hide, or delete comments that violate these terms or
+        GitHub's rules, and I reserve the right to disable comments generally at
+        any time. To have your comment removed, you can edit or delete it on the
+        GitHub discussion yourself, or ask me.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Newsletter</h2>
-      <p>By subscribing to our newsletter, you agree to:</p>
+      <p>
+        The newsletter features emails referencing new blog posts and, from
+        time to time, notable site updates. Canada's Anti-Spam Legislation
+        (CASL) governs those emails. By subscribing you agree that:
+      </p>
       <ul>
-        <li>Provide accurate email information</li>
-        <li>Receive periodic emails from us</li>
-        <li>Comply with our Privacy Policy</li>
+        <li>You provide a valid, accurate email address</li>
+        <li>
+          Subscription requires express consent: checking the consent box in
+          the sign-up form and confirming via the link in the confirmation
+          email (double opt-in)
+        </li>
+        <li>
+          Every email I send will identify me as the sender, include my contact
+          information, and include an unsubscribe link
+        </li>
+        <li>
+          Unsubscribe requests are honoured promptly and always within
+          <strong>10 business days</strong>, as CASL requires
+        </li>
+        <li>
+          I will never sell, rent, or share your email address, and I will
+          never add you to the list without valid consent — if I ever receive a
+          complaint that an email was sent without consent, I can produce the
+          consent record from the double opt-in process
+        </li>
+        <li>Subscribing has nothing to do with any commercial offering</li>
       </ul>
       <p>
-        You can unsubscribe at any time using the link provided in each
-        newsletter email.
+        Any subscribers' information is handled as described in the
+        <a href="/privacy" class="underline">Privacy Policy</a>.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Disclaimer of Warranties</h2>
+      <h2 class="text-2xl font-semibold">Third-Party Services</h2>
       <p>
-        The information on this website is provided "as is" without warranties
-        of any kind, either express or implied. We do not warrant that:
+        This site relies on independent third-party services, each governed by
+        its own terms:
       </p>
       <ul>
-        <li>The website will be available at all times</li>
-        <li>The information is accurate, complete, or current</li>
-        <li>The website will be free from errors or viruses</li>
+        <li>
+          <strong>Cloudflare</strong> — hosting and content delivery
+        </li>
+        <li>
+          <strong>GitHub</strong> — code hosting and comment storage —
+          <a
+            href="https://docs.github.com/en/site-policy/github-terms-of-service"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">GitHub Terms of Service</a
+          >
+        </li>
+        <li>
+          <strong>giscus</strong> — comment widget — <a
+            href="https://giscus.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">giscus.app</a
+          >
+        </li>
+        <li>
+          <strong>Brevo</strong> — newsletter platform — <a
+            href="https://www.brevo.com/legal/termsofuse/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">Brevo Terms of Use</a
+          >
+        </li>
       </ul>
       <p>
-        We make no representations or warranties regarding the accuracy,
-        reliability, or suitability of the information for any particular
-        purpose.
+        The site also contains links to external websites; I am not
+        responsible for their content, terms, or privacy practices.
+      </p>
+    </section>
+
+    <section class="mb-8 space-y-4">
+      <h2 class="text-2xl font-semibold">Disclaimers</h2>
+      <p>
+        The site and its content are provided on an "as is" and "as available"
+        basis, without warranties or conditions of any kind, express or
+        implied. In particular, I do not warrant that:
+      </p>
+      <ul>
+        <li>Content is accurate, complete, current, or suitable for your purposes</li>
+        <li>The site will be uninterrupted, secure, or error-free</li>
+        <li>
+          The server hosting the site is free of viruses or other harmful
+          components (standard for any website)
+        </li>
+      </ul>
+      <p>
+        Your use of the site is entirely at your own risk. To the maximum
+        extent permitted by applicable law, I disclaim all implied warranties
+        and conditions.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Limitation of Liability</h2>
       <p>
-        To the fullest extent permitted by law, {siteName} and its operators shall
-        not be liable for any indirect, incidental, special, consequential, or punitive
-        damages, or any loss of profits or revenues, whether incurred directly or
-        indirectly, or any loss of data, use, goodwill, or other intangible losses
-        resulting from your use of the website.
+        To the maximum extent permitted by Ontario and Canadian law, Andrew
+        Raisbeck will not be liable to you for any indirect, incidental,
+        special, consequential, or punitive damages, or for any loss of data,
+        profits, revenue, or goodwill, arising from or related to your use of
+        (or inability to use) the site, even if advised such damages were
+        possible. Nothing here limits liability for anything that cannot be
+        limited under applicable law (such as gross negligence or
+        intentional misconduct).
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Third-Party Links</h2>
+      <h2 class="text-2xl font-semibold">Changes to the Site and These Terms</h2>
       <p>
-        Our website may contain links to third-party websites. We are not
-        responsible for the content, privacy policies, or practices of these
-        external sites. Your use of third-party websites is at your own risk.
+        I may update, change, or remove content, features, these terms, or the
+        site overall at any time without notice. The terms in effect when you
+        visit apply to that visit; check this page periodically for changes.
       </p>
     </section>
 
-    <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Modifications</h2>
-      <p>
-        We reserve the right to modify these Terms & Conditions at any time.
-        Changes will be effective immediately upon posting on this page. Your
-        continued use of the website after changes are posted constitutes
-        acceptance of the modified terms.
-      </p>
-    </section>
-
-    <section class="mb-8 space-y-4">
+    <section id="governing-law" class="mb-8 space-y-4">
       <h2 class="text-2xl font-semibold">Governing Law</h2>
       <p>
-        These Terms & Conditions are governed by and construed in accordance
-        with applicable laws. Any disputes arising from these terms shall be
-        subject to the exclusive jurisdiction of the appropriate courts.
+        These terms are governed by the laws of the Province of Ontario and the
+        federal laws of Canada applicable therein, without regard to conflict
+        of laws rules. Any dispute relating to these terms or the site will be
+        resolved exclusively in the courts located in Ontario, Canada.
       </p>
     </section>
 
     <section class="mb-8 space-y-4">
-      <h2 class="text-2xl font-semibold">Contact Information</h2>
+      <h2 class="text-2xl font-semibold">Contact</h2>
       <p>
-        If you have any questions about these Terms & Conditions, please contact
-        us:
+        Questions or notices regarding these terms:
       </p>
       <div class="bg-muted/30 rounded-lg border p-4">
         <p class="m-0">
+          <strong>Andrew Raisbeck</strong><br />
           <strong>Email:</strong>
           <a href={`mailto:${contactEmail}`} class="underline">{contactEmail}</a
           >
