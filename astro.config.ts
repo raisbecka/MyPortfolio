@@ -81,7 +81,10 @@ export default defineConfig({
     },
   },
   server: {
-    port: 1234,
+    // NOT 1234 — that's LM Studio's default port, and the OpenCode background
+    // service polls http://127.0.0.1:1234/api/v1/models every 30s, which used
+    // to log "[404] /api/v1/models" in the npm start terminal on every dev run.
+    port: 5173,
     host: true,
   },
   devToolbar: {
