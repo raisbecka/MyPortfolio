@@ -27,6 +27,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 type ExperienceItem = {
   role: string
+  note?: string
   company: string
   period: string
   current?: boolean
@@ -48,7 +49,8 @@ const experiences: ExperienceCategory[] = [
     value: 'ibm-maximo',
     items: [
       {
-        role: 'Acting Program Manager, Digital Environmental (concurrent assignment)',
+        role: 'Acting Program Manager, Digital Environmental',
+        note: 'Concurrent assignment',
         company: 'York Region',
         period: 'Sep 2025–Apr 2026',
         current: true,
@@ -62,6 +64,7 @@ const experiences: ExperienceCategory[] = [
       },
       {
         role: 'Maximo Systems Specialist',
+        note: 'Same role as Enterprise Developer slide',
         company: 'York Region',
         period: '2019–present',
         icon: 'lucide:settings',
@@ -85,32 +88,35 @@ const experiences: ExperienceCategory[] = [
         period: '2019–present',
         current: true,
         icon: 'lucide:code',
-        keys: [[
-          'Built eLogbook, a Java Struts/Spring extension to EZMaxMobile, for water and wastewater staff working centrally and in the field; later rebuilt it using Maximo Mobile’s React-based framework.',
+        keys: [
+          'Extensive experience designing and developing many applications for Maximo desktop, Maximo Mobile (React-based modern web-app), and EZMaxMobile (enterprise Java Struts/Spring mobile application framework).',
+          'Examples of applications include: Water & Wastewater Operator Logbook application, ORO/OIC Automated Staff Scheduling System, etc.',
           'Introduced Azure DevOps CI/CD pipelines, eliminating manual deployment errors and reducing deployment time from several hours to 30–40 minutes.',
-          'Combined Prometheus/Grafana monitoring with JUnit load tests simulating hundreds of authenticated users to identify and eliminate recurring application crashes and associated downtime.',
-        ].join(' • ')],
+          'Implemented Prometheus/Grafana monitoring to track server stability as well as JUnit load testing to proactively identify potential issues in our applications.',
+          'Developed automated UI and regression tests - leverging frameworks like Jest, Selenium, and UIPath.'
+        ],
       },
       {
         role: 'Business Intelligence and Process Management Analyst',
         company: 'York Region',
         period: '2017–2019',
         icon: 'lucide:layers',
-        keys: [[
-          'Developed public-facing digital services for Public Health and Child Care Services using Microsoft SharePoint, Power Platform and IBM WebSphere.',
-          'Managed requirements, development, stakeholder coordination, documentation, training and support, including documenting and redesigning business processes where appropriate.',
+        keys: [
+          'Developed public-facing digital services (using Microsoft SharePoint, Power Platform and IBM WebSphere) - such as York Region\'s Enhanced Funding Childcare Portal, York Transit\'s MobilityPlus Intake Portal, etc.',
           'Onboarded the Housing department to Yardi Asset Management for desktop and mobile property management, preventive maintenance scheduling and inspection management.',
-        ].join(' • ')],
+          'Responsible for entire development process from requirements, development, stakeholder coordination, documentation, training and support - as well as documenting and redesigning business processes where appropriate.',
+        ],
       },
       {
         role: 'Independent Consultant',
         company: 'Selected clients, including Game Used Only and High Speed Hockey',
         period: '2015–2025',
         icon: 'lucide:terminal',
-        keys: [[
-          'Built and maintained custom React web applications and Visual Basic desktop tools.',
-          'Implemented Cloudflare security and authentication, and reduced time to first byte by more than 70%.',
-        ].join(' • ')],
+        keys: [
+          'Implemented Cloudflare domain management, WAF, secure tunnels, caching and proxying - reducing time to first byte by more than 70%.',
+          'Built and maintained multiple core business tools used on a daily basis in Visual Basic and Java - saving businesses hours a day.',
+          'Designed and developed multiple websites, managed emailing campaigns, and provided general technical support services.'
+        ],
       },
     ],
   },
@@ -145,6 +151,7 @@ function TimelineItem({
         <div className="min-w-0 flex-1 pb-2">
           <div className="mb-1">
             <h3 className="text-lg leading-tight font-semibold">{exp.role}</h3>
+            {exp.note && (<span className="text-xs text-muted-foreground font-style: italic">** {exp.note}</span>)}
             <p className="text-muted-foreground text-sm">
               {exp.company} · {exp.period}
             </p>
@@ -218,7 +225,7 @@ export default function ExperienceCarousel() {
           </div>
         </div>
 
-        <div className="absolute top-0 left-1/2 z-10 flex -translate-x-1/2 -translate-y-1 gap-1.5">
+        <div className="absolute top-0 max-sm:right-0 sm:left-1/2 z-10 flex -translate-x-1/2 -translate-y-1 gap-1.5">
           <button
             onClick={scrollToPrev}
             className="border-border bg-background text-foreground hover:bg-muted shadow-sm flex h-9 w-9 items-center justify-center rounded-md border transition-colors"
