@@ -132,10 +132,19 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 ### Newsletter Setup
 
+The newsletter uses a Brevo **hosted subscription form** (embedded in the
+footer) with double opt-in — no server-side endpoint needed, which makes it
+compatible with static hosting on GitHub Pages.
+
 1. Sign up for [Brevo](https://www.brevo.com/) (free tier available)
-2. Get your API key from Settings → API Keys
-3. Create a list and get the List ID
-4. Add environment variables to `.env`
+2. Create a contact list, then a **Subscription form** tied to that list
+3. Enable **Double Opt-In** for the form and set the confirmation redirect to
+   `/newsletter/confirmed`
+4. Copy the hosted form URL from Brevo and paste it into the `iframe`
+   `src` in `src/components/Footer.astro`
+
+Consent, double-opt-in confirmation, and unsubscribe are all handled by Brevo;
+`BREVO_*` environment variables are no longer used.
 
 ### Disqus Setup
 

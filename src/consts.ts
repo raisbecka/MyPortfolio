@@ -28,15 +28,9 @@ export const UMAMI = {
 // Nothing to configure here; the repo/category are set in that component.
 
 // Brevo Newsletter
-// Get your API key from https://app.brevo.com/settings/keys/api
-// Set it as an environment variable: BREVO_API_KEY=your-api-key
-// Optional: Set BREVO_LIST_ID to automatically add subscribers to a specific list
-// Optional: Set BREVO_TEMPLATE_ID for double opt-in confirmation email (default: 5)
-export const BREVO = {
-  apiKey: import.meta.env.BREVO_API_KEY || '',
-  listId: import.meta.env.BREVO_LIST_ID || '',
-  templateId: import.meta.env.BREVO_TEMPLATE_ID || '5',
-}
+// The footer embeds a Brevo hosted subscription form (double opt-in); the
+// form/list settings in the Brevo dashboard control consent and confirmation.
+// Server-side BREVO_* env vars and API calls are no longer used on GitHub Pages.
 
 export const NAV_LINKS: SocialLink[] = [
   {
@@ -81,9 +75,10 @@ export const ICON_MAP: IconMap = {
   RSS: 'lucide:rss',
 }
 
-// Newsletter consent text (centralized for CASL + GDPR compliance).
-// CASL requires the consent request to identify the sender and describe the
-// purpose for which consent is being sought.
+// Newsletter consent wording — the Brevo hosted form's consent checkbox
+// should be configured with THIS text (kept here as the single source of
+// truth). CASL requires the consent request to identify the sender and
+// describe the purpose of the consent.
 export const NEWSLETTER_CONSENT_TEXT = {
   text: 'I consent to receive emails from Andrew Raisbeck about new blog posts and occasional site updates. I can unsubscribe at any time using the link in any email.',
   privacyLink: '/privacy',
