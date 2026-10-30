@@ -1,5 +1,6 @@
 ---
 import Link from '@/components/Link.astro'
+import { buttonVariants } from '@/components/ui/button'
 import { NAV_LINKS, SITE, SOCIAL_LINKS } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import SocialIcons from './SocialIcons.astro'
@@ -25,22 +26,25 @@ const isExternalLink = (href: string) => {
             Get the latest posts delivered to your inbox.
           </p>
         </div>
-        <div class="w-full max-w-[540px] md:flex-shrink-0">
+        <div class="w-full md:flex-shrink-0">
           <!-- Brevo hosted subscription form (double opt-in). Static hosting
                on GitHub Pages can't run the old server-side endpoint, so this
                public form URL handles consent + confirmation. See /privacy. -->
-          <iframe
-            width="540"
-            height="305"
-            src="https://eef3dd42.sibforms.com/v2/serve/MUIFALrY0SZA4642LbHtlSR7jqM-R_KZX8yfa3WryTUbXcBDo3Qz3W16ecFMnmVscPFw-3xJBQ3FguL1Tq6Zye9zMntufeAcJ9mIO_lMoXquyCSWnbEenviFJVahkIqmctBLzKCbBkuNbBoQsgth2fnjyCZZqYDORyyAIwyARJLBAMsWCN4GtvMiHOySgkBsCNqa6hTip9eTe_Upww=="
-            frameborder="0"
-            scrolling="auto"
-            allowfullscreen
-            title="Newsletter subscription form"
-            loading="lazy"
-            class="border-border/60 bg-background dark:bg-white/10 rounded-md border"
-            style="display: block; margin-left: auto; margin-right: auto; max-width: 100%">
-          </iframe>
+          <a
+            href="https://eef3dd42.sibforms.com/v2/serve/MUIFALrY0SZA4642LbHtlSR7jqM-R_KZX8yfa3WryTUbXcBDo3Qz3W16ecFMnmVscPFw-3xJBQ3FguL1Tq6Zye9zMntufeAcJ9mIO_lMoXquyCSWnbEenviFJVahkIqmctBLzKCbBkuNbBoQsgth2fnjyCZZqYDORyyAIwyARJLBAMsWCN4GtvMiHOySgkBsCNqa6hTip9eTe_Upww=="
+            target="_blank"
+            rel="noopener noreferrer"
+            class={buttonVariants({ variant: 'default', size: 'lg' })}
+            aria-label="Click to Subscribe — opens the newsletter subscription form in a new tab"
+          >
+            <Icon name="lucide:mail" class="size-4 shrink-0" aria-hidden="true" />
+            Click to Subscribe
+            <Icon
+              name="lucide:external-link"
+              class="size-3 shrink-0 opacity-70"
+              aria-hidden="true"
+            />
+          </a>
         </div>
       </div>
 

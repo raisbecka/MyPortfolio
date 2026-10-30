@@ -140,8 +140,8 @@ compatible with static hosting on GitHub Pages.
 2. Create a contact list, then a **Subscription form** tied to that list
 3. Enable **Double Opt-In** for the form and set the confirmation redirect to
    `/newsletter/confirmed`
-4. Copy the hosted form URL from Brevo and paste it into the `iframe`
-   `src` in `src/components/Footer.astro`
+4. Copy the hosted form URL from Brevo and paste it as the `href` of the
+   "Click to Subscribe" button in `src/components/Footer.astro`
 
 Consent, double-opt-in confirmation, and unsubscribe are all handled by Brevo;
 `BREVO_*` environment variables are no longer used.
