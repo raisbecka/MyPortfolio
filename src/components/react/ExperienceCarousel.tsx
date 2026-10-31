@@ -63,7 +63,7 @@ const experiences: ExperienceCategory[] = [
         ],
       },
       {
-        role: 'Maximo Systems Specialist',
+        role: 'Senior IBM Maximo Administrator & Developer',
         note: 'Same role as Enterprise Developer slide',
         company: 'York Region',
         period: '2019–present',
@@ -83,7 +83,7 @@ const experiences: ExperienceCategory[] = [
     value: 'Enterprise-Developer',
     items: [
       {
-        role: 'Business Systems Specialist',
+        role: 'Senior IBM Maximo Administrator & Developer',
         company: 'York Region',
         period: '2019–present',
         current: true,
